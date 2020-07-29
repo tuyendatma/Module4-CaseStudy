@@ -28,7 +28,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("/create-user").access("hasRole('ADMIN')")
+                .antMatchers("/create-user","/edit-user").access("hasRole('ADMIN')")
                 .antMatchers("/home").access("hasRole('USER')").and()
                 .formLogin().and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))

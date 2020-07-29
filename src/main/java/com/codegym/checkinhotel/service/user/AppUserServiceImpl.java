@@ -22,7 +22,7 @@ public class AppUserServiceImpl implements IAppUserService, UserDetailsService {
 
     @Override
     public AppUser getUserByUserName(String username) {
-        return userRepository.findByName(username);
+        return userRepository.findByUsername(username);
     }
 
     @Override
