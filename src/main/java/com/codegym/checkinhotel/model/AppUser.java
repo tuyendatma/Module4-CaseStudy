@@ -1,6 +1,7 @@
 package com.codegym.checkinhotel.model;
 
 import lombok.Data;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 
@@ -17,6 +18,7 @@ public class AppUser {
 
     @Column(nullable = false)
     private String password;
+
     @Column(nullable = false)
     private String name;
     @Column(nullable = false,unique = true)

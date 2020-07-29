@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class AppUserServiceImpl implements IAppUserService, UserDetailsService {
 
@@ -20,7 +22,7 @@ public class AppUserServiceImpl implements IAppUserService, UserDetailsService {
 
     @Override
     public AppUser getUserByUserName(String username) {
-        return userRepository.findByName(username);
+        return userRepository.findAppUserByUsername(username);
     }
 
     @Override
@@ -30,5 +32,25 @@ public class AppUserServiceImpl implements IAppUserService, UserDetailsService {
         authorities.add(appUser.getRole());
         UserDetails userDetails = new User(appUser.getName(), appUser.getPassword(), authorities);
         return userDetails;
+    }
+
+    @Override
+    public Iterable<AppUser> findAll() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public Optional<AppUser> findById(Long id) {
+        return userRepository.findById(id);
+    }
+
+    @Override
+    public AppUser save(AppUser appUser) {
+        return userRepository.save(appUser);
+    }
+
+    @Override
+    public void remove(Long id) {
+        userRepository.deleteById(id);
     }
 }
