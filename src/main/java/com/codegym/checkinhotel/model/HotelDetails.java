@@ -28,7 +28,7 @@ public class HotelDetails {
 
     @Override
     public String toString() {
-        return "City [id=" + id
+        return "Hotel detail [id=" + id
                 + ", name=" + name
                 + ", description=" + description
                 + "]";

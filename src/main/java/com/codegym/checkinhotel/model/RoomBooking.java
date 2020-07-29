@@ -47,7 +47,7 @@ public class RoomBooking {
 
     @Override
     public String toString() {
-        return "Hotel [id=" + id
+        return "Room booking [id=" + id
                 + ", booking date=" + bookingDate
                 + ", checkin date=" + checkinDate
                 + ", checkout date=" + checkoutDate

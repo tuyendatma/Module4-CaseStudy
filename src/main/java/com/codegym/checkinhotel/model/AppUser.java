@@ -6,7 +6,7 @@ import org.hibernate.annotations.ColumnDefault;
 import javax.persistence.*;
 
 @Entity
-@Table
+@Table(name = "users")
 @Data
 public class AppUser {
     @Id
@@ -31,7 +31,7 @@ public class AppUser {
 
     @Override
     public String toString() {
-        return "Hotel [id=" + id
+        return "User [id=" + id
                 + ", name=" + name
                 + ", email=" + email
                 + ", gender=" + gender

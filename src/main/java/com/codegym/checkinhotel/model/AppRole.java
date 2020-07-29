@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table
+@Table(name = "roles")
 @Data
 public class AppRole implements GrantedAuthority {
 
@@ -17,7 +17,7 @@ public class AppRole implements GrantedAuthority {
     private Long id;
 
     @Column
-    @ColumnDefault("ROLE_USER")
+//    @ColumnDefault("ROLE_USER")
     private String name;
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "role",cascade = CascadeType.ALL)
@@ -30,7 +30,7 @@ public class AppRole implements GrantedAuthority {
 
     @Override
     public String toString() {
-        return "Hotel [id=" + id
+        return "Role [id=" + id
                 + ", name=" + name
                 + "]";
     }
