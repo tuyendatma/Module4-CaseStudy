@@ -9,6 +9,7 @@ import org.hibernate.annotations.Type;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
@@ -22,7 +23,7 @@ public class RoomBooking {
     private Long id;
     @Column(name = "booking_date")
     @CreationTimestamp
-    private String bookingDate;
+    private Timestamp bookingDate;
     @Column(name = "checkin_date", nullable = false)
     private String checkinDate;
     @Column(name = "checkout_date", nullable = false)
@@ -38,7 +39,7 @@ public class RoomBooking {
 //    @JoinColumn(name = "room_id",nullable = false)
 //    private Room room;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "roomBookings")
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "room_booking_room",
             joinColumns = {@JoinColumn(name = "room_booking_id")},
             inverseJoinColumns = {@JoinColumn(name = "room_id")})
