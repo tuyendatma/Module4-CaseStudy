@@ -1,6 +1,7 @@
 package com.codegym.checkinhotel.model;
 
 import lombok.Data;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -14,7 +15,6 @@ public class AppRole implements GrantedAuthority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
     private String name;
 
     @Override
