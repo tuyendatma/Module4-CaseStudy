@@ -9,6 +9,7 @@ import org.hibernate.annotations.Type;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Data
@@ -22,9 +23,9 @@ public class RoomBooking {
     @Column(name = "booking_date")
     @CreationTimestamp
     private String bookingDate;
-    @Column(name = "checkin_date",nullable = false)
+    @Column(name = "checkin_date", nullable = false)
     private String checkinDate;
-    @Column(name = "checkout_date",nullable = false)
+    @Column(name = "checkout_date", nullable = false)
     private String checkoutDate;
     @Column
     @Type(type = "text")
@@ -33,7 +34,24 @@ public class RoomBooking {
     @Min(1)
     private int quantityBooking;
 
-    @ManyToOne
-    @JoinColumn(name = "room_id",nullable = false)
-    private Room room;
+//    @ManyToOne
+//    @JoinColumn(name = "room_id",nullable = false)
+//    private Room room;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "roomBookings")
+    @JoinTable(name = "room_booking_room",
+            joinColumns = {@JoinColumn(name = "room_booking_id")},
+            inverseJoinColumns = {@JoinColumn(name = "room_id")})
+    private List<Room> rooms;
+
+    @Override
+    public String toString() {
+        return "Hotel [id=" + id
+                + ", booking date=" + bookingDate
+                + ", checkin date=" + checkinDate
+                + ", checkout date=" + checkoutDate
+                + ", note=" + note
+                +", quantity booking" + quantityBooking
+                + "]";
+    }
 }

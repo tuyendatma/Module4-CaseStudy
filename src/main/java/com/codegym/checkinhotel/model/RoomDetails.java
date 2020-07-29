@@ -25,4 +25,12 @@ public class RoomDetails {
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "roomDetails",cascade = CascadeType.ALL)
     private List<Room>rooms;
+
+    @Override
+    public String toString() {
+        return "Hotel [id=" + id
+                + ", name=" + name
+                + ", quantity exists=" + quantityExists
+                + "]";
+    }
 }

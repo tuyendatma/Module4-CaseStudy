@@ -53,6 +53,7 @@ public class Hotel {
         return "Hotel [id=" + id
                 + ", name=" + name
                 + ", address=" + address
+                + ", image=" + image
                 + ", description=" + description
                 + ", evaluation=" + evaluation
                 + "]";
