@@ -1,5 +1,6 @@
 package com.codegym.checkinhotel.config.security;
 
+import com.codegym.checkinhotel.config.CustomSuccessHandler;
 import com.codegym.checkinhotel.service.user.IAppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
+    @Autowired
+    private CustomSuccessHandler customSuccessHandler;
 
     @Autowired
     private IAppUserService userService;
@@ -27,15 +30,17 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/").permitAll()
-                .antMatchers("/admin-city/**","/").hasRole("ADMIN")
-                .antMatchers("/home").hasRole("USER")
-//                .antMatchers("")
+                .antMatchers("/home").permitAll()
+                .antMatchers("/home/**/").access("hasRole('ADMIN')")
+                .antMatchers("/home/**/").access("hasRole('USER')").and()
+//                .formLogin().loginPage("/login")
+                .formLogin().loginPage("/login").successHandler(customSuccessHandler)
+                .usernameParameter("username").passwordParameter("password")
+                .failureUrl("/fail-login")
                 .and()
-                .formLogin().and()
-                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .and().exceptionHandling().accessDeniedPage("/error")
-                ;
+                .logout().logoutSuccessUrl("/").permitAll()
+//                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .and().exceptionHandling().accessDeniedPage("/access-denied");
         http.csrf().disable();
     }
 }
