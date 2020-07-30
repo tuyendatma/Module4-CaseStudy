@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>list city</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+    </script>
+</head>
+<body>
+<a href="/admin-city/create">tao moi thanh pho</a>
+<table id="ListCity">
+    <tr>
+        <td>name</td>
+        <td>description</td>
+        <td>image</td>
+        <td>delete</td>
+    </tr>
+    <th:block th:each="c: ${cities}">
+        <tr>
+            <td th:text="${c.name}"></td>
+            <td th:text="${c.description}"></td>
+<!--            <td th:text="${c.image}"></td>-->
+            <td><img width="200px" height="200px" th:src="@{'/'+${c.image}}" alt="failure"></td>
+
+            <td><a class="deleteCity" th:href="@{/admin-city/delete/__${c.id}__}">delete</a></td>
+        </tr>
+    </th:block>
+</table>
+</body>
+</html>

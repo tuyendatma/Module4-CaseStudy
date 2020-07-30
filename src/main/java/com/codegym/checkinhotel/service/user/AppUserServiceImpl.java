@@ -22,7 +22,7 @@ public class AppUserServiceImpl implements IAppUserService, UserDetailsService {
 
     @Override
     public AppUser getUserByUserName(String username) {
-        return userRepository.findByUsername(username);
+        return userRepository.findAppUserByUsername(username);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class AppUserServiceImpl implements IAppUserService, UserDetailsService {
     }
 
     @Override
-    public Iterable<AppUser> listCustomer() {
+    public Iterable<AppUser> findAll() {
         return userRepository.findAll();
     }
 

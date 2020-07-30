@@ -1,10 +1,16 @@
 <!DOCTYPE html>
+<<<<<<< HEAD
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+=======
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+>>>>>>> dat_dev
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Edit user</title>
 </head>
 <body>
+<<<<<<< HEAD
 <h1>Edit customer</h1>
 <form  th:object="${user}" method="post">
     <input type="hidden" name="id" th:field="*{id}">
@@ -20,4 +26,11 @@
         </tr>
     </table>
 </form>
+=======
+<h1>Edit user</h1>
+
+<div sec:authorize="isAuthenticated()">
+    <a th:href="@{/}">Home</a> | <a th:href="@{/logout}">Logout</a>
+</div>
+>>>>>>> dat_dev
 </body>
