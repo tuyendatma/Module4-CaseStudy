@@ -1,0 +1,69 @@
+package com.codegym.checkinhotel.model;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import javax.validation.constraints.Min;
+import java.util.List;
+
+@Entity
+@Table(name = "room_details")
+@NoArgsConstructor
+@AllArgsConstructor
+public class RoomDetails {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(nullable = false)
+    private String name;
+    @Column(name = "quantity_exists")
+    @Min(0)
+    private int quantityExists;
+
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "roomDetails",cascade = CascadeType.ALL)
+    @JsonIgnoreProperties(value = "room_details")
+    private List<Room>rooms;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getQuantityExists() {
+        return quantityExists;
+    }
+
+    public void setQuantityExists(int quantityExists) {
+        this.quantityExists = quantityExists;
+    }
+
+    public List<Room> getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(List<Room> rooms) {
+        this.rooms = rooms;
+    }
+
+    @Override
+    public String toString() {
+        return "Room detail [id=" + id
+                + ", name=" + name
+                + ", quantity exists=" + quantityExists
+                + "]";
+    }
+}
