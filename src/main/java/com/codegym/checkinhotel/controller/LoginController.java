@@ -16,6 +16,11 @@ public class LoginController {
     @Autowired
     private IAppUserService userService;
 
+    @GetMapping("/login")
+    private String loginPage(){
+        return "index/login";
+    }
+
     @GetMapping("/create-user")
     public ModelAndView showFormLogin(){
         ModelAndView modelAndView = new ModelAndView("appuser/create");

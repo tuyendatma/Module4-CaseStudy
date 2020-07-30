@@ -23,6 +23,6 @@ public class HomeController {
     @GetMapping("/")
     public String homePage(Model model){
         model.addAttribute("user",getPrincipal());
-        return "home";
+        return "index/home";
     }
 }

@@ -1,5 +1,6 @@
 package com.codegym.checkinhotel.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,6 +31,7 @@ public class City {
     private MultipartFile imageFile;
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "city",cascade = CascadeType.ALL,targetEntity = Hotel.class)
+    @JsonIgnoreProperties(value = "cities")
     private List<Hotel> hotels;
 
     @Override
