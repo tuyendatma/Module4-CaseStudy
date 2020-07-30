@@ -1,4 +1,4 @@
-package com.codegym.checkinhotel.config;
+package com.codegym.checkinhotel.config.security;
 
 import com.codegym.checkinhotel.service.user.IAppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +28,14 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("/create-user","/edit-user").access("hasRole('ADMIN')")
-                .antMatchers("/home").access("hasRole('USER')").and()
+                .antMatchers("/admin-city/**","/").hasRole("ADMIN")
+                .antMatchers("/home").hasRole("USER")
+//                .antMatchers("")
+                .and()
                 .formLogin().and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .and().exceptionHandling().accessDeniedPage("/error");
+                .and().exceptionHandling().accessDeniedPage("/error")
+                ;
         http.csrf().disable();
     }
 }

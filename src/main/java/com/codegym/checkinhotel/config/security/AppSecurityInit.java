@@ -1,4 +1,4 @@
-package com.codegym.checkinhotel.config;
+package com.codegym.checkinhotel.config.security;
 
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 
