@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -10,6 +11,26 @@
     <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico">
 </head>
 <body>
+<a th:href="@{/city}">List hotel</a>
+<form th:action="@{/city/edit-city}" th:object="${city}" method="post" enctype="multipart/form-data">
+    <input type="text" hidden="hidden" th:field="*{id}">
+    <table>
+        <tr>
+            <td>Name</td>
+            <td><input type="text" th:field="*{name}"></td>
+        </tr>
+        <tr>
+            <td>Address</td>
+            <td><input type="text" th:field="*{description}"></td>
+        </tr>
+        <tr>
+            <td>Image</td>
+            <td><input type="file" th:field="*{imageFile}"></td>
+        </tr>
 
+    </table>
+    <td><input type="submit" value="Update"></td>
+
+</form>
 </body>
 </html>

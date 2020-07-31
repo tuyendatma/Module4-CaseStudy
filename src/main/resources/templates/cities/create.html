@@ -11,9 +11,9 @@
 </head>
 <body>
 <h1>form create</h1>
-<a href="/admin-city/index">danh sach thanh pho</a>
+<a href="/city">danh sach thanh pho</a>
 
-<form  th:object="${city}" method="post" enctype="multipart/form-data">
+<form th:action="@{/city/create-city}" th:object="${city}" method="post" enctype="multipart/form-data">
     <table>
         <tr>
             <td>name</td>
@@ -27,11 +27,8 @@
             <td>image</td>
             <td><input type="file" th:field="*{imageFile}"></td>
         </tr>
-        <tr>
-            <td></td>
-            <td><input type="submit" value="tao moi"></td>
-        </tr>
     </table>
+    <input type="submit" value="tao moi">
 </form>
 </body>
 </html>

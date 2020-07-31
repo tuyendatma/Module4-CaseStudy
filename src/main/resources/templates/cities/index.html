@@ -15,22 +15,22 @@
     </script>
 </head>
 <body>
-<a href="/admin-city/create">tao moi thanh pho</a>
+<a href="/city/create-city">tao moi thanh pho</a>
 <table id="ListCity">
     <tr>
         <td>name</td>
         <td>description</td>
         <td>image</td>
         <td>delete</td>
+        <td>edit</td>
     </tr>
     <th:block th:each="c: ${cities}">
         <tr>
             <td th:text="${c.name}"></td>
             <td th:text="${c.description}"></td>
-<!--            <td th:text="${c.image}"></td>-->
             <td><img width="200px" height="200px" th:src="@{'/'+${c.image}}" alt="failure"></td>
-
-            <td><a class="deleteCity" th:href="@{/admin-city/delete/__${c.id}__}">delete</a></td>
+            <td><a class="deleteCity" th:href="@{/city/delete-city/__${c.id}__}">delete</a></td>
+            <td ><a th:href="@{/city/edit-city/__${c.id}__}">Edit</a></td>
         </tr>
     </th:block>
 </table>

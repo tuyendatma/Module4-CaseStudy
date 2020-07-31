@@ -62,6 +62,14 @@ public class Hotel {
         this.evaluation = evaluation;
     }
 
+    public Hotel(String name, String address, String image, String description, int evaluation) {
+        this.name = name;
+        this.address = address;
+        this.image = image;
+        this.description = description;
+        this.evaluation = evaluation;
+    }
+
     public Hotel(String name, String address, MultipartFile imageFile, String description, int evaluation) {
         this.name = name;
         this.address = address;
