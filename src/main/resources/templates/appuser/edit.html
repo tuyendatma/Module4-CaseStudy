@@ -9,29 +9,44 @@
 
     <link rel="manifest" href="site.webmanifest">
     <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico">
+
 </head>
 <body>
-
-<h1>Edit customer</h1>
-<form  th:object="${user}" method="post">
-    <input type="hidden" name="id" th:field="*{id}">
+<h1>Edit user</h1>
+<a th:href="@{/users}">List user</a>
+<form th:action="@{/users/edit-user}" th:object="${user}" method="post" enctype="multipart/form-data">
+    <input type="text" hidden="hidden" th:field="*{id}">
     <table>
         <tr>
             <td>Name</td>
-            <td><input type="text" name="name" th:field="*{name}"></td>
+            <td><input type="text" th:field="*{name}"></td>
         </tr>
-
+        <tr>
+            <td>Email</td>
+            <td><input type="text" th:field="*{email}"></td>
+        </tr>
+        <tr>
+            <td>Gender</td>
+            <td><input type="text" th:field="*{gender}"></td>
+        </tr>
+        <tr>
+            <td>Username</td>
+            <td><input type="text" th:field="*{username}"></td>
+        </tr>
+        <tr>
+            <td>Password</td>
+            <td><input type="password" th:field="*{password}"></td>
+        </tr>
         <tr>
             <td></td>
-            <td><input type="submit"  value="submit" ></td>
+            <!--            <td><input type="submit" value="Create"></td>-->
         </tr>
     </table>
+    <input type="submit" value="Create">
 </form>
-=======
-<h1>Edit user</h1>
 
 <div sec:authorize="isAuthenticated()">
     <a th:href="@{/}">Home</a> | <a th:href="@{/logout}">Logout</a>
 </div>
->>>>>>> dat_dev
 </body>
+</html>
