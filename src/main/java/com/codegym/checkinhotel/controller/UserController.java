@@ -4,14 +4,21 @@ import com.codegym.checkinhotel.model.AppUser;
 import com.codegym.checkinhotel.service.user.IAppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
     @Autowired
     private IAppUserService userService;
+
+    @GetMapping
+    public String showAllHotel(Model model){
+        model.addAttribute("hotels",userService.findAll());
+        return "appuser/index";
+    }
 
     @GetMapping("/create-user")
     public ModelAndView showFormLogin(){
