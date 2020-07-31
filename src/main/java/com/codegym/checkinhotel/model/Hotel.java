@@ -13,7 +13,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "hotels")
-@NoArgsConstructor
 @AllArgsConstructor
 public class Hotel {
     @Id
@@ -34,22 +33,42 @@ public class Hotel {
     private String description;
     //đánh giá
     @Column
-    @Size(min = 1,max = 5)
+//    @Size(min = 1,max = 5)
     private int evaluation;
 
     @ManyToOne
-    @JoinColumn(name = "city_id",nullable = false)
+    @JoinColumn(name = "city_id")
     @JsonIgnoreProperties(value = "hotels")
     private City city;
 
     @ManyToOne
-    @JoinColumn(name = "hotel_detail_id",nullable = false)
+    @JoinColumn(name = "hotel_detail_id")
     @JsonIgnoreProperties(value = "hotels")
     private HotelDetails hotelDetails;
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "hotel",cascade = CascadeType.ALL)
     @JsonIgnoreProperties(value = "hotels")
     private List<Room> rooms;
+
+    public Hotel() {
+    }
+
+    public Hotel(Long id,String name, String address, String image, String description, int evaluation) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.image = image;
+        this.description = description;
+        this.evaluation = evaluation;
+    }
+
+    public Hotel(String name, String address, MultipartFile imageFile, String description, int evaluation) {
+        this.name = name;
+        this.address = address;
+        this.imageFile = imageFile;
+        this.description = description;
+        this.evaluation = evaluation;
+    }
 
     public Long getId() {
         return id;
@@ -131,14 +150,14 @@ public class Hotel {
         this.rooms = rooms;
     }
 
-    @Override
-    public String toString() {
-        return "Hotel [id=" + id
-                + ", name=" + name
-                + ", address=" + address
-                + ", image=" + image
-                + ", description=" + description
-                + ", evaluation=" + evaluation
-                + "]";
-    }
+//    @Override
+//    public String toString() {
+//        return "Hotel [id=" + id
+//                + ", name=" + name
+//                + ", address=" + address
+//                + ", image=" + image
+//                + ", description=" + description
+//                + ", evaluation=" + evaluation
+//                + "]";
+//    }
 }

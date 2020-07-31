@@ -1,4 +1,8 @@
 package com.codegym.checkinhotel.repository;
 
-public interface ICityRepository {
+import com.codegym.checkinhotel.model.City;
+import org.springframework.data.repository.PagingAndSortingRepository;
+
+public interface ICityRepository extends PagingAndSortingRepository<City,Long> {
+
 }
