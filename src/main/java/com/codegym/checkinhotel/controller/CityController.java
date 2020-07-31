@@ -2,6 +2,7 @@ package com.codegym.checkinhotel.controller;
 
 import com.codegym.checkinhotel.model.AppUser;
 import com.codegym.checkinhotel.model.City;
+import com.codegym.checkinhotel.model.Hotel;
 import com.codegym.checkinhotel.service.city.ICityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -24,56 +25,62 @@ public class CityController {
     @Autowired
     private Environment environment;
 
-    @GetMapping("/index")
-    public ModelAndView showCity(){
-        Iterable<City> cities = cityService.findAll();
-        ModelAndView modelAndView = new ModelAndView("cities/index");
-        modelAndView.addObject("cities",cities);
-        return modelAndView;
+    @GetMapping
+    public String showAllCity(Model model) {
+        model.addAttribute("cities", cityService.findAll());
+        return "cities/index";
     }
 
     @GetMapping("/create-city")
-    public ModelAndView showFormCreateCity(){
-        ModelAndView modelAndView = new ModelAndView("cities/create");
-        modelAndView.addObject("city",new City());
-        return modelAndView;
+    public String showCreateCity(Model model) {
+        model.addAttribute("city", new City());
+        return "cities/create";
     }
 
     @PostMapping("/create-city")
-    public ModelAndView createUser(@ModelAttribute City city){
+    public String createHotel(@ModelAttribute City city, Model model) {
         MultipartFile file = city.getImageFile();
-        String filename = file.getOriginalFilename();
+        String fileName = file.getOriginalFilename();
         String fileUpload = environment.getProperty("upload.city").toString();
-        try{
-            FileCopyUtils.copy(file.getBytes(),new File(fileUpload+filename));
-        }catch (IOException e){
+        try {
+            FileCopyUtils.copy(file.getBytes(), new File(fileUpload + fileName));
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        City city1 = new City(city.getName(),city.getDescription(),filename);
-        cityService.save(city1);
-        ModelAndView modelAndView = new ModelAndView("cities/create");
-        modelAndView.addObject("city",new City());
-        return modelAndView;
+        city.setImage(fileName);
+        cityService.save(city);
+        model.addAttribute("city", new City());
+        return "cities/create";
     }
 
-//    @GetMapping("/edit/{id}")
-//    public ModelAndView showEditCity(@PathVariable Long id){
-//        ModelAndView modelAndView = new ModelAndView("cities/edit");
-//        modelAndView.addObject("city",cityService.findById(id));
-//        return modelAndView;
-//    }
-//
-//    @PostMapping("/edit")
-//    public ModelAndView editCity(@ModelAttribute City city){
-//        ModelAndView modelAndView = new ModelAndView("cities/edit");
-//        cityService.save(city);
-//        modelAndView.addObject("city", city);
-//        return modelAndView;
-//    }
+    @GetMapping("/edit-city/{id}")
+    public String showEditCity(Model model, @PathVariable("id") Long id) {
+        model.addAttribute("city", cityService.findById(id));
+        return "cities/edit";
+    }
 
-    @GetMapping("/delete/{id}")
-    public String deleteCity(@PathVariable Long id){
+    @PostMapping("/edit-city")
+    public String editCity(@ModelAttribute("city") City city, Model model){
+        MultipartFile file = city.getImageFile();
+        String fileName = file.getOriginalFilename();
+        String fileUpload = environment.getProperty("upload.city").toString();
+        try {
+            FileCopyUtils.copy(file.getBytes(), new File(fileUpload + fileName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        city.setImage(fileName);
+        cityService.save(city);
+        model.addAttribute("city", city);
+        return "redirect:/city";
+    }
+
+    @GetMapping("/delete-city/{id}")
+    public String deleteCity (@PathVariable("id") Long id){
         cityService.remove(id);
-        return "redirect:/city/index";
+        return "redirect:/city";
     }
 }
+
+
+

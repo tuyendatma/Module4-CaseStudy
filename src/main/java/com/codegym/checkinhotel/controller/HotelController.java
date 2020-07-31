@@ -53,7 +53,7 @@ public class HotelController {
     }
 
     @GetMapping("/edit-hotel/{id}")
-    public String showEditCity(Model model, @PathVariable("id") Long id){
+    public String showEditHotel(Model model, @PathVariable("id") Long id){
         model.addAttribute("hotel",hotelService.findById(id));
         return "hotel/edit";
     }
@@ -75,7 +75,7 @@ public class HotelController {
     }
 
     @GetMapping("/delete-hotel/{id}")
-    public String deleteCustomer (@PathVariable("id") Long id){
+    public String deleteHotel (@PathVariable("id") Long id){
         hotelService.remove(id);
         return "redirect:/hotels";
     }

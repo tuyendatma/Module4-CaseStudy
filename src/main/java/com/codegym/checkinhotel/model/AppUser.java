@@ -34,8 +34,8 @@ public class AppUser {
     public AppUser() {
     }
 
-    public AppUser(Long id,) {
-    }
+//    public AppUser(Long id,) {
+//    }
 
     public Long getId() {
         return id;
