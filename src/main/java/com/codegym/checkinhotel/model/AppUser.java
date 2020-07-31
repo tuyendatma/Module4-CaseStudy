@@ -23,18 +23,31 @@ public class AppUser {
 
     @Column(nullable = false,unique = true)
     private String email;
-    @NotEmpty
-    private Boolean gender;
+    private @NotEmpty String gender;
 
     @ManyToOne
-    @JoinColumn(name = "role_id",nullable = false)
+    @JoinColumn(name = "role_id" , nullable = false)
     @JsonIgnoreProperties(value = "users")
     private AppRole role;
 
     public AppUser() {
     }
 
-    public AppUser(Long id,) {
+    public AppUser(Long id,String name,String email,String gender,String username, String password) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.gender = gender;
+        this.username = username;
+        this.password = password;
+    }
+
+    public AppUser(String name,String email,String gender,String username, String password) {
+        this.name = name;
+        this.email = email;
+        this.gender = gender;
+        this.username = username;
+        this.password = password;
     }
 
     public Long getId() {
@@ -77,11 +90,11 @@ public class AppUser {
         this.email = email;
     }
 
-    public Boolean getGender() {
+    public @NotEmpty String getGender() {
         return gender;
     }
 
-    public void setGender(Boolean gender) {
+    public void setGender(@NotEmpty String gender) {
         this.gender = gender;
     }
 

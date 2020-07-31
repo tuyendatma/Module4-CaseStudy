@@ -24,6 +24,14 @@ public class AppRole implements GrantedAuthority {
     @JsonIgnoreProperties(value = "roles")
     private List<AppUser> users;
 
+    public AppRole() {
+    }
+
+    public AppRole(Long id,String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     @Override
     public String getAuthority() {
         return this.name;
