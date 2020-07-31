@@ -30,16 +30,30 @@ public class City {
     @Transient
     private MultipartFile imageFile;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "city",cascade = CascadeType.ALL,targetEntity = Hotel.class)
-    @JsonIgnoreProperties(value = "cities")
-    private List<Hotel> hotels;
+//    @OneToMany(fetch = FetchType.LAZY,mappedBy = "city",cascade = CascadeType.ALL,targetEntity = Hotel.class)
+//    @JsonIgnoreProperties(value = "cities")
+//    private List<Hotel> hotels;
 
-    @Override
-    public String toString() {
-        return "City [id=" + id
-                + ", name=" + name
-                + ", description=" + description
-                + ", image=" + image
-                + "]";
+
+    public City(String name, String description,String image){
+        this.name =name;
+        this.description =description;
+        this.image = image;
     }
+
+    public City(String name, String description, MultipartFile imageFile){
+        this.name = name;
+        this.description =description;
+        this.imageFile = imageFile;
+    }
+
+
+//    @Override
+//    public String toString() {
+//        return "City [id=" + id
+//                + ", name=" + name
+//                + ", description=" + description
+//                + ", image=" + image
+//                + "]";
+//    }
 }

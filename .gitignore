@@ -34,3 +34,5 @@ out/
 .vscode/
 
 local.env
+.jpg
+.png

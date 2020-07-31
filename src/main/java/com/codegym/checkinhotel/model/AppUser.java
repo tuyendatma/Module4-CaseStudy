@@ -1,8 +1,6 @@
 package com.codegym.checkinhotel.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -14,7 +12,7 @@ public class AppUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false)
     private String username;
 
     @Column(nullable = false)
@@ -22,6 +20,7 @@ public class AppUser {
 
     @Column(nullable = false)
     private String name;
+
     @Column(nullable = false,unique = true)
     private String email;
     @NotEmpty
@@ -31,6 +30,12 @@ public class AppUser {
     @JoinColumn(name = "role_id",nullable = false)
     @JsonIgnoreProperties(value = "users")
     private AppRole role;
+
+    public AppUser() {
+    }
+
+    public AppUser(Long id,) {
+    }
 
     public Long getId() {
         return id;
