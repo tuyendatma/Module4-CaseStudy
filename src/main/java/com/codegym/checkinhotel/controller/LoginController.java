@@ -15,12 +15,17 @@ public class LoginController {
     }
 
     @GetMapping("/login")
-    private String loginPage(){
+    public String loginPage(){
         return "index/login";
     }
 
     @GetMapping("/fail-login")
-    private String failedLogin(){
+    public String failedLogin(){
         return "fail-login";
+    }
+
+    @GetMapping("/register")
+    public String registerPage(){
+        return "index/register";
     }
 }

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>List room</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" h1379ref="/assets/img/favicon.ico">
+</head>
+<body>
+<h1>List room</h1>
+<a th:href="@{/rooms/create-room}">Create room</a>
+<table>
+    <thead>
+    <tr>
+        <td>Name</td>
+        <td>Image</td>
+        <td>Description</td>
+        <td>Price</td>
+        <td>Edit</td>
+        <td>Delete</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="room : ${rooms}">
+        <td th:text="${room.name}"></td>
+        <td><img width="200px" height="150px" th:src="@{'/'+${room.image}}" alt="Error"></td>
+        <td th:text="${room.description}"></td>
+        <td th:text="${room.price}"></td>
+        <td ><a th:href="@{/rooms/edit-room/__${room.id}__}">Edit</a></td>
+        <td ><a th:href="@{/rooms/delete-room/__${room.id}__}">Delete</a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

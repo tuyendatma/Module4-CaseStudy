@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Create room</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico">
+</head>
+
+<body>
+
+<h1>Create room</h1>
+<a th:href="@{/rooms}">List room</a>
+<form th:action="@{/rooms/create-room}" th:object="${room}" method="post" enctype="multipart/form-data">
+    <table>
+        <tr>
+            <td>Name</td>
+            <td><input type="text" th:field="*{name}"></td>
+        </tr>
+        <tr>
+            <td>Image</td>
+            <td><input type="file" th:field="*{imageFile}"></td>
+        </tr>
+        <tr>
+            <td>Description</td>
+            <td><textarea style="width: 200px; height: 100px;" th:field="*{description}"></textarea></td>
+        </tr>
+        <tr>
+            <td>Price</td>
+            <td><input type="number" th:field="*{price}"></td>
+        </tr>
+        <tr>
+            <td>Hotel</td>
+            <td>
+                <select name="hotel">
+                    <option th:each="hotel : ${hotels}" th:value="${hotel.id}" th:text="${hotel.name}"></option>
+                </select>
+            </td>
+        </tr>
+    </table>
+    <td><input type="submit" value="Create room"></td>
+
+</form>
+</body>
+</html>
