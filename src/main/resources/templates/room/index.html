@@ -19,6 +19,8 @@
         <td>Name</td>
         <td>Image</td>
         <td>Description</td>
+        <td>Hotel</td>
+        <td>Kind of room</td>
         <td>Price</td>
         <td>Edit</td>
         <td>Delete</td>
@@ -29,6 +31,8 @@
         <td th:text="${room.name}"></td>
         <td><img width="200px" height="150px" th:src="@{'/'+${room.image}}" alt="Error"></td>
         <td th:text="${room.description}"></td>
+        <td th:text="${room.hotel.name}"></td>
+        <td th:text="${room.roomDetails.name}"></td>
         <td th:text="${room.price}"></td>
         <td ><a th:href="@{/rooms/edit-room/__${room.id}__}">Edit</a></td>
         <td ><a th:href="@{/rooms/delete-room/__${room.id}__}">Delete</a></td>

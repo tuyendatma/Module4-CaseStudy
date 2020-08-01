@@ -41,6 +41,14 @@
                 </select>
             </td>
         </tr>
+        <tr>
+            <td>Room detail</td>
+            <td>
+                <select name="roomDetails">
+                    <option th:each="roomdetail : ${roomDetails}" th:value="${roomdetail.id}" th:text="${roomdetail.name}"></option>
+                </select>
+            </td>
+        </tr>
     </table>
     <td><input type="submit" value="Create room"></td>
 

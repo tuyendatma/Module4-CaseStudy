@@ -2,8 +2,10 @@ package com.codegym.checkinhotel.controller;
 
 import com.codegym.checkinhotel.model.Hotel;
 import com.codegym.checkinhotel.model.Room;
+import com.codegym.checkinhotel.model.RoomDetails;
 import com.codegym.checkinhotel.service.hotel.IHotelService;
 import com.codegym.checkinhotel.service.room.IRoomService;
+import com.codegym.checkinhotel.service.roomdetail.IRoomDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
@@ -28,9 +30,17 @@ public class RoomController {
     @Autowired
     private IHotelService hotelService;
 
+    @Autowired
+    private IRoomDetailService roomDetailService;
+
     @ModelAttribute("hotels")
     public Iterable<Hotel> hotels(){
         return hotelService.findAll();
+    }
+
+    @ModelAttribute("roomDetails")
+    public Iterable<RoomDetails> roomDetails(){
+        return roomDetailService.findAll();
     }
 
     @GetMapping
