@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Index hotel</title>
+</head>
+<body>
+<h1>Index booking</h1>
+<a th:href="@{/booking/create-roombooking}">Create Roombooking</a>
+<table>
+    <thead>
+    <tr>
+        <td>Checkin Date</td>
+        <td>Checkout Date</td>
+        <td>Note</td>
+        <td>Quantity Booking</td>
+        <td>Edit</td>
+        <td>Delete</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="c : ${roombooking}">
+        <td th:text="${c.checkinDate}"></td>
+        <td th:text="${c.checkoutDate}"></td>
+        <td th:text="${c.note}"></td>
+        <td th:text="${c.quantityBooking}"></td>
+        <td ><a th:href="@{/booking/edit-roombooking/__${c.id}__}">Edit</a></td>
+        <td ><a th:href="@{/booking/delete-roombooking/__${c.id}__}">Delete</a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

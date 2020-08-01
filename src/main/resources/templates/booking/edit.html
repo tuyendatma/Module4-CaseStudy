@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>EDit hotel</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico">
+</head>
+<body>
+<a th:href="@{/booking}">List Room booking</a>
+<form th:action="@{/booking/edit-roombooking}" th:object="${roombooking}" method="post" >
+    <input type="text" hidden="hidden" th:field="*{id}">
+    <table>
+        <tr>
+            <td>CheckIn-Date</td>
+            <td><input type="text" th:field="*{checkinDate}"></td>
+        </tr>
+        <tr>
+            <td>CheckOut-Date</td>
+            <td><input type="text" th:field="*{checkoutDate}"></td>
+        </tr>
+        <tr>
+            <td>Description</td>
+            <td><textarea style="width: 200px; height: 100px;" th:field="*{note}"></textarea></td>
+        </tr>
+        <tr>
+            <td>Quantity Booking</td>
+            <td><input type="number" th:field="*{quantityBooking}"></td>
+        </tr>
+        <tr>
+            <td></td>
+        </tr>
+    </table>
+    <td><input type="submit" value="Update"></td>
+
+</form>
+</body>
+</html>
