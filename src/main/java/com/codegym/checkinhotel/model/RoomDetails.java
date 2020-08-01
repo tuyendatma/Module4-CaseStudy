@@ -2,7 +2,6 @@ package com.codegym.checkinhotel.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -19,9 +18,9 @@ public class RoomDetails {
     private Long id;
     @Column(nullable = false)
     private String name;
-    @Column(name = "quantity_exists")
+    @Column(name = "quantity")
     @Min(0)
-    private int quantityExists;
+    private int quantity;
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "roomDetails",cascade = CascadeType.ALL)
     @JsonIgnoreProperties(value = "room_details")
@@ -43,12 +42,12 @@ public class RoomDetails {
         this.name = name;
     }
 
-    public int getQuantityExists() {
-        return quantityExists;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setQuantityExists(int quantityExists) {
-        this.quantityExists = quantityExists;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public List<Room> getRooms() {
@@ -63,7 +62,7 @@ public class RoomDetails {
     public String toString() {
         return "Room detail [id=" + id
                 + ", name=" + name
-                + ", quantity exists=" + quantityExists
+                + ", quantity exists=" + quantity
                 + "]";
     }
 }

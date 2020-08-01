@@ -20,7 +20,7 @@
     <tbody>
     <tr th:each="c : ${roomdetails}">
         <td th:text="${c.name}"></td>
-        <td th:text="${c.quantityExists}"></td>
+        <td th:text="${c.quantity}"></td>
         <td ><a th:href="@{/roomdetail/edit-roomdetail/__${c.id}__}">Edit</a></td>
         <td ><a th:href="@{/roomdetail/delete-roomdetail/__${c.id}__}">Delete</a></td>
     </tr>

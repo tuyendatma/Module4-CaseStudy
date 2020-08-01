@@ -43,15 +43,15 @@ public class Room {
     @JsonIgnoreProperties(value = "rooms")
     private RoomDetails roomDetails;
 
-//    @OneToMany(fetch = FetchType.LAZY,mappedBy = "room",cascade = CascadeType.ALL)
-//    private List<RoomBooking>roomBookings;
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "room",cascade = CascadeType.ALL)
+    private List<RoomBooking>roomBookings;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "room_booking_room",
-            joinColumns = {@JoinColumn(name = "room_id")},
-            inverseJoinColumns = {@JoinColumn(name = "room_booking_id")})
-    @JsonIgnoreProperties(value = "rooms")
-    private List<RoomBooking> roomBookings;
+//    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinTable(name = "room_booking_room",
+//            joinColumns = {@JoinColumn(name = "room_id")},
+//            inverseJoinColumns = {@JoinColumn(name = "room_booking_id")})
+//    @JsonIgnoreProperties(value = "rooms")
+//    private List<RoomBooking> roomBookings;
 
     public Long getId() {
         return id;

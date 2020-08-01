@@ -31,20 +31,21 @@ public class RoomBooking {
     @Column
     @Type(type = "text")
     private String note;
-    @Column(name = "quantity_booking")
-    @Min(1)
-    private int quantityBooking;
 
-//    @ManyToOne
-//    @JoinColumn(name = "room_id",nullable = false)
-//    private Room room;
+    @ManyToOne
+    @JoinColumn(name = "user_id",nullable = false)
+    private AppUser user;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "room_booking_room",
-            joinColumns = {@JoinColumn(name = "room_booking_id")},
-            inverseJoinColumns = {@JoinColumn(name = "room_id")})
-    @JsonIgnoreProperties(value = "room_booking")
-    private List<Room> rooms;
+    @ManyToOne
+    @JoinColumn(name = "room_id",nullable = false)
+    private Room room;
+
+//    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @JoinTable(name = "room_booking_room",
+//            joinColumns = {@JoinColumn(name = "room_booking_id")},
+//            inverseJoinColumns = {@JoinColumn(name = "room_id")})
+//    @JsonIgnoreProperties(value = "room_booking")
+//    private List<Room> rooms;
 
     public Long getId() {
         return id;
@@ -86,20 +87,20 @@ public class RoomBooking {
         this.note = note;
     }
 
-    public int getQuantityBooking() {
-        return quantityBooking;
+    public AppUser getUser() {
+        return user;
     }
 
-    public void setQuantityBooking(int quantityBooking) {
-        this.quantityBooking = quantityBooking;
+    public void setUser(AppUser user) {
+        this.user = user;
     }
 
-    public List<Room> getRooms() {
-        return rooms;
+    public Room getRoom() {
+        return room;
     }
 
-    public void setRooms(List<Room> rooms) {
-        this.rooms = rooms;
+    public void setRoom(Room room) {
+        this.room = room;
     }
 
     @Override
@@ -109,7 +110,6 @@ public class RoomBooking {
                 + ", checkin date=" + checkinDate
                 + ", checkout date=" + checkoutDate
                 + ", note=" + note
-                +", quantity booking" + quantityBooking
                 + "]";
     }
 }
