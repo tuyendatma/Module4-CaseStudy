@@ -1,7 +1,11 @@
 package com.codegym.checkinhotel.controller;
 
+import com.codegym.checkinhotel.model.City;
 import com.codegym.checkinhotel.model.Hotel;
+import com.codegym.checkinhotel.model.HotelDetails;
+import com.codegym.checkinhotel.service.city.ICityService;
 import com.codegym.checkinhotel.service.hotel.IHotelService;
+import com.codegym.checkinhotel.service.hoteldetail.IHotelDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
@@ -23,6 +27,18 @@ public class HotelController {
 
     @Autowired
     private Environment environment;
+
+    @Autowired
+    private ICityService cityService;
+
+    @Autowired
+    private IHotelDetailService hotelDetailService;
+
+    @ModelAttribute("cities")
+    public Iterable<City> listCities(){return cityService.findAll();}
+
+    @ModelAttribute("hotelDetails")
+    public Iterable<HotelDetails> listHotelDetails(){return hotelDetailService.findAll();}
 
     @GetMapping
     public String showAllHotel(Model model){
