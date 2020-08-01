@@ -39,7 +39,20 @@
             <td><input type="number" th:field="*{evaluation}"></td>
         </tr>
         <tr>
-            <td></td>
+            <td>Hotel Detail</td>
+            <td>
+                <select name="hotelDetails" >
+                    <option th:each="hoteldetail: ${hotelDetails}" th:value="${hoteldetail.id}" th:text="${hoteldetail.name}"></option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>City</td>
+            <td>
+                <select name="city">
+                    <option th:each="city: ${cities}" th:value="${city.id}" th:text="${city.name}"></option>
+                </select>
+            </td>
         </tr>
     </table>
     <td><input type="submit" value="Create"></td>

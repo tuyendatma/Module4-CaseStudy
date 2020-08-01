@@ -21,6 +21,8 @@
         <td>Image</td>
         <td>Description</td>
         <td>Evaluation</td>
+        <td>Hotel Detail</td>
+        <td>City</td>
         <td>Edit</td>
         <td>Delete</td>
     </tr>
@@ -32,6 +34,8 @@
         <td><img width="200px" height="150px" th:src="@{'/'+${hotel.image}}" alt="Error"></td>
         <td th:text="${hotel.description}"></td>
         <td th:text="${hotel.evaluation}"></td>
+        <td th:text="${hotel.hotelDetails.name}"></td>
+        <td th:text="${hotel.city.name}"></td>
         <td ><a th:href="@{/hotels/edit-hotel/__${hotel.id}__}">Edit</a></td>
         <td ><a th:href="@{/hotels/delete-hotel/__${hotel.id}__}">Delete</a></td>
     </tr>
