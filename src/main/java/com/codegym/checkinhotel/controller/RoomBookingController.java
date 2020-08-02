@@ -1,64 +1,90 @@
 package com.codegym.checkinhotel.controller;
 
-import com.codegym.checkinhotel.model.Hotel;
-import com.codegym.checkinhotel.model.HotelDetails;
-import com.codegym.checkinhotel.model.Room;
-import com.codegym.checkinhotel.model.RoomBooking;
-import com.codegym.checkinhotel.service.booking.RoomBookingService;
-import com.codegym.checkinhotel.service.room.RoomService;
+import com.codegym.checkinhotel.model.*;
+import com.codegym.checkinhotel.service.booking.IRoomBookingService;
+import com.codegym.checkinhotel.service.city.ICityService;
+import com.codegym.checkinhotel.service.hotel.IHotelService;
+import com.codegym.checkinhotel.service.room.IRoomService;
+import com.codegym.checkinhotel.service.user.IAppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/booking")
+@RequestMapping("/bookings")
 public class RoomBookingController {
     @Autowired
-    private RoomBookingService roomBookingService;
+    private IRoomBookingService roomBookingService;
 
     @Autowired
-    private RoomService roomService;
+    private IRoomService roomService;
 
-    @ModelAttribute
-    public Iterable<Room> listRooms(){return roomService.findAll();}
+    @Autowired
+    private IAppUserService userService;
+
+    @Autowired
+    private ICityService cityService;
+
+    @Autowired
+    private IHotelService hotelService;
+
+    @ModelAttribute("rooms")
+    public Iterable<Room> listRooms(){
+        return roomService.findAll();
+    }
+
+    @ModelAttribute("hotels")
+    public Iterable<Hotel> listHotels(){
+        return hotelService.findAll();
+    }
+
+    @ModelAttribute("cities")
+    public Iterable<City> listCities(){
+        return cityService.findAll();
+    }
+
+    @ModelAttribute("users")
+    public Iterable<AppUser> listUsers(){
+        return userService.findAll();
+    }
 
     @GetMapping
     public String showAllRoomBookings(Model model){
-        model.addAttribute("roombooking",roomBookingService.findAll());
+        model.addAttribute("bookings",roomBookingService.findAll());
         return "booking/index";
     }
 
-    @GetMapping("/create-roombooking")
+    @GetMapping("/create-booking")
     public String showCreateRoomBooking(Model model) {
-        model.addAttribute("roombooking", new RoomBooking());
+        model.addAttribute("booking", new RoomBooking());
         return "booking/create";
     }
 
-    @PostMapping("/create-roombooking")
+    @PostMapping("/create-booking")
     public String createRoomBooking(@ModelAttribute RoomBooking roomBooking, Model model){
         roomBookingService.save(roomBooking);
-        model.addAttribute("roombooking",new RoomBooking());
+        model.addAttribute("booking",new RoomBooking());
         return "booking/create";
     }
 
-    @GetMapping("/edit-roombooking/{id}")
+    @GetMapping("/edit-booking/{id}")
     public String showEditRoomBooking(Model model, @PathVariable("id") Long id){
-        model.addAttribute("roombooking",roomBookingService.findById(id));
+        model.addAttribute("booking",roomBookingService.findById(id));
         return "booking/edit";
     }
 
-    @PostMapping("/edit-roombooking")
-    public String editRoomBooking(@ModelAttribute("roombooking") RoomBooking roomBooking, Model model){
+    @PostMapping("/edit-booking")
+    public String editRoomBooking(@ModelAttribute RoomBooking roomBooking, Model model){
         roomBookingService.save(roomBooking);
-        model.addAttribute("roombooking", roomBooking);
-        return "redirect:/booking";
+        model.addAttribute("booking", roomBooking);
+        return "redirect:/bookings";
     }
 
-    @GetMapping("/delete-roombooking/{id}")
+    @GetMapping("/delete-booking/{id}")
     public String deleteRoomBooking (@PathVariable("id") Long id){
         roomBookingService.remove(id);
-        return "redirect:/booking";
+        return "redirect:/bookings";
     }
 
 

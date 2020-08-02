@@ -14,8 +14,8 @@
 <body>
 
 <h1>Create hotel</h1>
-<a th:href="@{/booking}">List hotel Detail</a>
-<form th:action="@{/booking/create-roombooking}" th:object="${roombooking}" method="post">
+<a th:href="@{/bookings}">List hotel Detail</a>
+<form th:action="@{/bookings/create-booking}" th:object="${booking}" method="post">
     <table>
         <tr>
             <td>Name</td>
@@ -28,11 +28,6 @@
         <tr>
             <td>Description</td>
             <td><textarea style="width: 200px; height: 100px;" th:field="*{note}"></textarea></td>
-        </tr>
-        <tr>
-            <td>Quantity Booking</td>
-            <td><input type="number" th:field="*{quantityBooking}"></td>
-
         </tr>
     </table>
     <td><input type="submit" value="Create"></td>

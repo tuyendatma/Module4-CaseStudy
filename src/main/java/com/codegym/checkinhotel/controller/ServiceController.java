@@ -7,26 +7,26 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ServiceController {
     @GetMapping("/about")
     public String about() {
-        return "index/about";
+        return "home/about";
     }
 
     @GetMapping("/services")
     public String services() {
-        return "index/services";
+        return "home/services";
     }
 
     @GetMapping("/blogs")
     public String blog() {
-        return "index/blog";
+        return "home/blog";
     }
 
     @GetMapping("/single-blog")
     public String singleBlog() {
-        return "index/single-blog";
+        return "home/single-blog";
     }
 
     @GetMapping("/contacts")
     public String contact() {
-        return "index/contact";
+        return "home/contact";
     }
 }

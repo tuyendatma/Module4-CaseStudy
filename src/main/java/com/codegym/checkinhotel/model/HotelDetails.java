@@ -2,7 +2,6 @@ package com.codegym.checkinhotel.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 
@@ -17,11 +16,11 @@ public class HotelDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
+    @Column(nullable = false,unique = true)
     private String name;
     @Column
-    @Type(type = "text")
-    private String description;
+//    @Type(type = "text")
+    private Integer quantity;
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "hotelDetails",cascade = CascadeType.ALL)
     @JsonIgnoreProperties(value = "hotel_details")
@@ -43,12 +42,12 @@ public class HotelDetails {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public Integer getQuantity() {
+        return quantity;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     public List<Hotel> getHotels() {
@@ -63,7 +62,7 @@ public class HotelDetails {
     public String toString() {
         return "Hotel detail [id=" + id
                 + ", name=" + name
-                + ", description=" + description
+                + ", description=" + quantity
                 + "]";
     }
 }

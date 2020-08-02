@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
@@ -14,17 +15,17 @@
         <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico">
 
         <link rel="stylesheet" href="/styles/css/bootstrap/bootstrap.min.css">
-        <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
-        <link rel="stylesheet" href="assets/css/gijgo.css">
-        <link rel="stylesheet" href="assets/css/slicknav.css">
-        <link rel="stylesheet" href="assets/css/animate.min.css">
-        <link rel="stylesheet" href="assets/css/magnific-popup.css">
-        <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
-        <link rel="stylesheet" href="assets/css/themify-icons.css">
-        <link rel="stylesheet" href="assets/css/slick.css">
-        <link rel="stylesheet" href="assets/css/nice-select.css">
-        <link rel="stylesheet" href="assets/css/style.css">
-        <link rel="stylesheet" href="assets/css/responsive.css">
+        <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
+        <link rel="stylesheet" href="/assets/css/gijgo.css">
+        <link rel="stylesheet" href="/assets/css/slicknav.css">
+        <link rel="stylesheet" href="/assets/css/animate.min.css">
+        <link rel="stylesheet" href="/assets/css/magnific-popup.css">
+        <link rel="stylesheet" href="/assets/css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="/assets/css/themify-icons.css">
+        <link rel="stylesheet" href="/assets/css/slick.css">
+        <link rel="stylesheet" href="/assets/css/nice-select.css">
+        <link rel="stylesheet" href="/assets/css/style.css">
+        <link rel="stylesheet" href="/assets/css/responsive.css">
 
         <link rel="stylesheet" href="/styles/css/login/navbar.css">
         <link rel="stylesheet" href="/styles/css/login/signup.css">
@@ -54,7 +55,7 @@
                     <!-- logo -->
                     <div class="col-xl-2 col-lg-2">
                         <div class="logo">
-                            <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
+                            <a href="index.html"><img src="/assets/img/logo/logo.png" alt=""></a>
                         </div>
                     </div>
                     <div class="col-xl-8 col-lg-8">
@@ -90,6 +91,14 @@
                                             Login
                                         </a>
                                     </li>
+
+                                    <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                                        <a class="nav-link" th:href="@{/logout}">
+                                            <i class="fa fa-sign-out-alt"></i>
+                                            Logout
+                                        </a>
+                                    </li>
+
                                 </ul>
                             </nav>
                         </div>
@@ -115,7 +124,7 @@
 
 
 <div class="registration-form">
-    <form method="post" action="/users?action=signup">
+    <form th:action="@{/users/create-user}" th:object="${user}" method="post" enctype="multipart/form-data">
         <div class="form-icon">
             <span>
 <!--               <span class = "glyphicon glyphicon-user"></span>-->
@@ -123,38 +132,48 @@
             </span>
         </div>
         <div class="form-group">
-            <input type="text" class="form-control item" name="name" id="name" placeholder="Full Name" required autofocus>
+            <input type="text" class="form-control item" th:field="*{name}" id="name" placeholder="Full Name" required autofocus>
         </div>
         <div class="form-group">
-            <input type="password" class="form-control item" name="password" id="password" placeholder="Password">
-            <input type="password" class="form-control item" name="cfPassword" id="cfPassword" placeholder="Confirm Password">
+            <input type="email" class="form-control item" th:field="*{email}" id="email" placeholder="Email">
         </div>
         <div class="form-group">
-            <input type="email" class="form-control item" name="email" id="email" placeholder="Email">
-        </div>
-        <div class="form-group">
-            <select style="width: 120px;padding: 2px 15px;" class="form-control item" name="gender">
+            <select class="form-control item widthSelect" th:field="*{gender}">
                 <option value="">Gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
             </select>
         </div>
         <div class="form-group">
-            <input type="date" class="form-control item" name="birthday" id="birth-date" placeholder="Birth date">
+            <input type="text" class="form-control item" th:field="*{username}" id="username" placeholder="Username">
         </div>
+        <div class="form-group">
+            <input type="password" class="form-control item" th:field="*{password}" id="password" placeholder="Password">
+            <input type="password" class="form-control item" name="cfPassword" id="cfPassword" placeholder="Confirm Password">
+        </div>
+        <div class="form-group" sec:authorize="hasRole('ADMIN')">
+            <select class="form-control item widthSelect" name="role">
+                <option th:each="role: ${roles}" th:value="${role.id}" th:text="${role.name}"></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <th:block th:if="${messages}">
+                <p style="color: red" th:text="${messages}"></p>
+            </th:block>
+        </div>
+
 <!--        <div class="form-group">-->
-<!--            <c:if test="${requestScope['message']!=null}">-->
-<!--                <span style="color: red" class="message">${requestScope["message"]}</span>-->
-<!--            </c:if>-->
+<!--            <input type="date" class="form-control item" name="birthday" id="birth-date" placeholder="Birth date">-->
 <!--        </div>-->
         <div class="form-group">
             <button style="height: 30px;" type="submit" class="btn btn-primary btn-block create-account">Register</button>
         </div>
         <hr>
         <div class="form-group">
-            <button style="height: 45px;" type="button" class="btn btn-block create-account btn-google"><i class="fab fa-google mr-2"></i>Sign up with Google</button>
-            <button style="height: 45px;" type="button" class="btn btn-block create-account btn-facebook"><i class="fab fa-facebook-f mr-2"></i>Sign up with Facebook</button>
+            <button style="height: 45px;" type="button" class="btn btn-block create-account btn-google"><i class="fab fa-google mr-2"></i>Register with Google</button>
+            <button style="height: 45px;" type="button" class="btn btn-block create-account btn-facebook"><i class="fab fa-facebook-f mr-2"></i>Register with Facebook</button>
         </div>
     </form>
 </div>
@@ -169,7 +188,7 @@
                     <div class="single-footer-caption mb-30">
                         <!-- logo -->
                         <div class="footer-logo">
-                            <a href="index.html"><img src="assets/img/logo/logo2_footer.png" alt=""></a>
+                            <a href="index.html"><img src="/assets/img/logo/logo2_footer.png" alt=""></a>
                         </div>
                         <div class="footer-social footer-social2">
                             <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -227,7 +246,7 @@
                                                onblur="this.placeholder = ' Email Address '">
                                         <div class="form-icon">
                                             <button type="submit" name="submit" id="newsletter-submit"
-                                                    class="email_icon newsletter-submit button-contactForm"><img src="assets/img/logo/form-iocn.jpg" alt=""></button>
+                                                    class="email_icon newsletter-submit button-contactForm"><img src="/assets/img/logo/form-iocn.jpg" alt=""></button>
                                         </div>
                                         <div class="mt-10 info"></div>
                                     </form>
@@ -246,40 +265,40 @@
 <!-- JS here -->
 
 <!-- All JS Custom Plugins Link Here here -->
-<script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>
+<script src="/assets/js/vendor/modernizr-3.5.0.min.js"></script>
 
 <!-- Jquery, Popper, Bootstrap -->
-<script src="./assets/js/vendor/jquery-1.12.4.min.js"></script>
-<script src="./assets/js/popper.min.js"></script>
-<script src="./assets/js/bootstrap.min.js"></script>
+<script src="/assets/js/vendor/jquery-1.12.4.min.js"></script>
+<script src="/assets/js/popper.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
 <!-- Jquery Mobile Menu -->
-<script src="./assets/js/jquery.slicknav.min.js"></script>
+<script src="/assets/js/jquery.slicknav.min.js"></script>
 
 <!-- Jquery Slick , Owl-Carousel Plugins -->
-<script src="./assets/js/owl.carousel.min.js"></script>
-<script src="./assets/js/slick.min.js"></script>
+<script src="/assets/js/owl.carousel.min.js"></script>
+<script src="/assets/js/slick.min.js"></script>
 <!-- Date Picker -->
-<script src="./assets/js/gijgo.min.js"></script>
+<script src="/assets/js/gijgo.min.js"></script>
 <!-- One Page, Animated-HeadLin -->
-<script src="./assets/js/wow.min.js"></script>
-<script src="./assets/js/animated.headline.js"></script>
-<script src="./assets/js/jquery.magnific-popup.js"></script>
+<script src="/assets/js/wow.min.js"></script>
+<script src="/assets/js/animated.headline.js"></script>
+<script src="/assets/js/jquery.magnific-popup.js"></script>
 
 <!-- Scrollup, nice-select, sticky -->
-<script src="./assets/js/jquery.scrollUp.min.js"></script>
-<script src="./assets/js/jquery.nice-select.min.js"></script>
-<script src="./assets/js/jquery.sticky.js"></script>
+<script src="/assets/js/jquery.scrollUp.min.js"></script>
+<script src="/assets/js/jquery.nice-select.min.js"></script>
+<script src="/assets/js/jquery.sticky.js"></script>
 
 <!-- contact js -->
-<script src="./assets/js/contact.js"></script>
-<script src="./assets/js/jquery.form.js"></script>
-<script src="./assets/js/jquery.validate.min.js"></script>
-<script src="./assets/js/mail-script.js"></script>
-<script src="./assets/js/jquery.ajaxchimp.min.js"></script>
+<script src="/assets/js/contact.js"></script>
+<script src="/assets/js/jquery.form.js"></script>
+<script src="/assets/js/jquery.validate.min.js"></script>
+<script src="/assets/js/mail-script.js"></script>
+<script src="/assets/js/jquery.ajaxchimp.min.js"></script>
 
 <!-- Jquery Plugins, main Jquery -->
-<script src="./assets/js/plugins.js"></script>
-<script src="./assets/js/main.js"></script>
+<script src="/assets/js/plugins.js"></script>
+<script src="/assets/js/main.js"></script>
 
 </body>
 </html>

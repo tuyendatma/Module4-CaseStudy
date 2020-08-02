@@ -26,8 +26,18 @@ public class AppUserServiceImpl implements IAppUserService, UserDetailsService {
     }
 
     @Override
+    public AppUser getUserByUsernameOrEmail(String username, String email) {
+        return userRepository.findAppUserByUsernameOrEmail(username,email);
+    }
+
+    @Override
+    public AppUser getAppUserByUsernameOrEmailAndPassword(String username, String email, String password) {
+        return userRepository.findAppUserByUsernameOrEmailAndPassword(username,email,password);
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        AppUser appUser = this.getUserByUserName(username);
+        AppUser appUser = this.getUserByUsernameOrEmail(username,username);
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(appUser.getRole());
         UserDetails userDetails = new User(appUser.getName(), appUser.getPassword(), authorities);
