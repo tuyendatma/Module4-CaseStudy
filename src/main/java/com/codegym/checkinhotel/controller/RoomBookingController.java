@@ -86,8 +86,4 @@ public class RoomBookingController {
         roomBookingService.remove(id);
         return "redirect:/bookings";
     }
-
-
-
-
 }
