@@ -15,12 +15,13 @@
 
 <h1>Create hotel</h1>
 <a th:href="@{/bookings}">List hotel Detail</a>
-<form th:action="@{/bookings/create-booking}" th:object="${booking}" method="post">
+<form id="createBookingForm" th:action="@{/bookings/create-booking}" th:object="${booking}" method="post">
     <table>
         <tr>
             <td>City</td>
             <td>
-                <select name="city">
+                <select id="city" name="city">
+                    <option value="">Select City</option>
                     <option th:each="city: ${cities}" th:value="${city.id}" th:text="${city.name}"></option>
                 </select>
             </td>
@@ -28,26 +29,27 @@
         <tr>
             <td>Hotel</td>
             <td>
-                <select name="hotel">
-                    <option th:each="hotel: ${hotels}" th:value="${hotel.id}" th:text="${hotel.name}"></option>
+                <select id="hotel" name="hotel">
+                    <option value="">Select city first</option>
                 </select>
             </td>
         </tr>
         <tr>
             <td>Room</td>
             <td>
-                <select name="room">
-                    <option th:each="room: ${rooms}" th:value="${room.id}" th:text="${room.name}"></option>
+                <select id="room" name="room">
+                    <option value="">Select room first</option>
+                    <!--                    <option th:each="room: ${rooms}" th:value="${room.id}" th:text="${room.name}"></option>-->
                 </select>
             </td>
         </tr>
         <tr>
             <td>Checkin date</td>
-            <td><input type="date" th:field="*{checkinDate}"></td>
+            <td><input type="datetime-local" th:field="*{checkinDate}"></td>
         </tr>
         <tr>
             <td>Checkout date</td>
-            <td><input type="date" th:field="*{checkoutDate}"></td>
+            <td><input type="datetime-local" th:field="*{checkoutDate}"></td>
         </tr>
         <tr>
             <td>Description</td>
@@ -59,23 +61,96 @@
 </form>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
-    $(document).ready(function(){
-        $('#showCity').submit(function (event) {
-            let city =$('#city').val();
-            let json = { "city" : city}
-            $.ajax({
-                //Quy định kiểu cho request và respond
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                type: "POST",
-                data: JSON.stringify(json),
-                url: "/smartphones/createnewPhone",
-                success: function () {
+    $(document).ready(function () {
 
-                }
-            });
+        // $('#city').click(function (event) {
+        //     let city = $('#city').val();
+        //     let json = {
+        //         id:city
+        //     }
+        //     $.ajax({
+        //         headers: {
+        //             'Accept':'application/json',
+        //             'Content-Type':'application/json'
+        //         },
+        //         type:"POST",
+        //         data: JSON.stringify(json),
+        //         // url: `/cities/${city}/hotels`,
+        //         url:"/cities/getHotelByCity",
+        //         success: (hotels) => {
+        //             let content = '';
+        //             for (let i = 0; i < hotels.length; i++) {
+        //                 content +=
+        //                     `<option value="${hotels[i].id}">${hotels[i].name}</option>`
+        //             }
+        //             document.getElementById('hotel').innerHTML=content;
+        //         }
+        //     })
+        //     event.preventDefault();
+        // })
+
+
+
+        //danh sách hotel từ thành phố
+        $('#city').on('change',function () {
+            let city = $(this).val();
+            if (city){
+                $.ajax({
+                    //Quy định kiểu cho request và respond
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    type: "GET",
+                    url: `/cities/${city}/hotels`,
+                    success: function (data) {
+                        console.log(data.responseText);
+                        // debugger
+                        let text = "";
+                        text += "<option value=''> Select Hotel" +"</option>";
+                        // $("select[name='hotel']").html('');
+                        $.each(data, function (key, value) {
+                            // debugger
+                            text += "<option value=" + value.id + ">" + value.name + "</option>";
+                            // $("select [name='hotel']").append(
+                            //     "<option value=" + value.id + ">" + value.name + "</option>"
+                            // )
+                        });
+                        $("#hotel").html(text);
+                    },
+                    error: function (msg) {
+                        console.log(msg)
+                    }
+                });
+            }
+
+        });
+
+    //Danh sách room từ hotel
+        $('#hotel').on('change',function () {
+            let hotel = $(this).val();
+            if (hotel){
+                $.ajax({
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    type: "GET",
+                    url: `/hotels/${hotel}/rooms`,
+                    success: function (data) {
+                        let text = "";
+                        text += "<option value=''> Select Room" +"</option>";
+                        $.each(data, function (key, value) {
+                            text += "<option value=" + value.id + ">" + value.name + "</option>";
+                        });
+                        $("#room").html(text);
+                    },
+                    error: function (msg) {
+                        console.log(msg)
+                    }
+                });
+            }
+
         });
     });
 </script>

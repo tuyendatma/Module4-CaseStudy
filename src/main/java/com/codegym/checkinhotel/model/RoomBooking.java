@@ -36,8 +36,9 @@ public class RoomBooking {
     @JoinColumn(name = "user_id",nullable = false)
     private AppUser user;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "room_id",nullable = false)
+    @JsonIgnoreProperties(value = "room_booking")
     private Room room;
 
 //    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

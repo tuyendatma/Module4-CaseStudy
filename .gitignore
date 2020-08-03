@@ -13,7 +13,7 @@ build/
 .settings
 .springBeans
 .sts4-cache
-
+test
 ### IntelliJ IDEA ###
 .idea
 *.iws

@@ -30,7 +30,8 @@ public class City {
     @Transient
     private MultipartFile imageFile;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "city",cascade = CascadeType.ALL,targetEntity = Hotel.class)
+//    targetEntity = Hotel.class  mappedBy = "city"
+    @OneToMany(fetch = FetchType.EAGER,cascade = {CascadeType.ALL},targetEntity = Hotel.class)
     @JsonIgnoreProperties(value = "cities")
     private List<Hotel> hotels;
 

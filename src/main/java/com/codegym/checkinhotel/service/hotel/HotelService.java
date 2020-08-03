@@ -1,10 +1,12 @@
 package com.codegym.checkinhotel.service.hotel;
 
+import com.codegym.checkinhotel.model.City;
 import com.codegym.checkinhotel.model.Hotel;
 import com.codegym.checkinhotel.repository.IHotelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -30,5 +32,10 @@ public class HotelService implements IHotelService {
     @Override
     public void remove(Long id) {
         hotelRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Hotel> getAllByCity(City city) {
+        return hotelRepository.findAllByCity(city);
     }
 }

@@ -36,7 +36,7 @@ public class Hotel {
 //    @Size(min = 1,max = 5)
     private int evaluation;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "city_id",nullable = false)
     @JsonIgnoreProperties(value = "hotels")
     private City city;
@@ -46,7 +46,8 @@ public class Hotel {
     @JsonIgnoreProperties(value = "hotels")
     private HotelDetails hotelDetails;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "hotel",cascade = CascadeType.ALL)
+    //mappedBy = "hotel"  lỗi nếu ko đổi sang mappedBy
+    @OneToMany(fetch = FetchType.LAZY,targetEntity = Room.class, cascade = CascadeType.ALL)
     @JsonIgnoreProperties(value = "hotels")
     private List<Room> rooms;
 

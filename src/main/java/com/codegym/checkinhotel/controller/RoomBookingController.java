@@ -4,7 +4,9 @@ import com.codegym.checkinhotel.model.*;
 import com.codegym.checkinhotel.service.booking.IRoomBookingService;
 import com.codegym.checkinhotel.service.city.ICityService;
 import com.codegym.checkinhotel.service.hotel.IHotelService;
+import com.codegym.checkinhotel.service.hoteldetail.IHotelDetailService;
 import com.codegym.checkinhotel.service.room.IRoomService;
+import com.codegym.checkinhotel.service.roomdetail.IRoomDetailService;
 import com.codegym.checkinhotel.service.user.IAppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,6 +14,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import java.time.Duration;
+
+
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/bookings")
@@ -30,6 +42,12 @@ public class RoomBookingController {
 
     @Autowired
     private IHotelService hotelService;
+
+    @Autowired
+    private IRoomDetailService roomDetailService;
+
+    @Autowired
+    private IHotelDetailService hotelDetailService;
 
     @ModelAttribute("rooms")
     public Iterable<Room> listRooms(){
@@ -76,13 +94,84 @@ public class RoomBookingController {
     }
 
     @PostMapping("/create-booking")
-    public String createRoomBooking(@ModelAttribute RoomBooking roomBooking, Model model){
+    public String createRoomBooking(@ModelAttribute RoomBooking roomBooking, Model model) {
         AppUser user = userService.getUserByUserName(getPrincipal());
-        if (user != null){
+        if (user == null) {
+            return "access-denied";
+        } else {
             roomBooking.setUser(user);
         }
+
+        //logic here
+//        int totalStandard = 0;
+//        int totalSuperior = 0;
+//        int totalDeluxe = 0;
+//        int totalSuite = 0;
+//        int totalConnectingRoom = 0;
+//        Iterable<RoomDetails> roomDetailList = roomDetailService.findAll();
+//        for (RoomDetails roomDetail:roomDetailList){
+//            if (roomDetail.getName().contains("Standard")){
+//                totalStandard=roomDetail.getQuantity();
+//            }else if (roomDetail.getName().contains("Superior")){
+//                totalSuperior=roomDetail.getQuantity();
+//            }else if (roomDetail.getName().contains("Deluxe")){
+//                totalDeluxe=roomDetail.getQuantity();
+//            }else if (roomDetail.getName().contains("Suite")){
+//                totalSuite=roomDetail.getQuantity();
+//            }else {
+//                totalConnectingRoom=roomDetail.getQuantity();
+//            }
+//        }
+//
+//        int quantityStandard = 0;
+//        int quantitySuperior = 0;
+//        int quantityDeluxe = 0;
+//        int quantitySuite = 0;
+//        int quantityConnectingRoom = 0;
+//        Iterable<RoomBooking> roomBookings = roomBookingService.findAll();
+//        for (RoomBooking roomBooking1 : roomBookings) {
+//            if (roomBooking1.getRoom().getRoomDetails().getName().contains("Standard")) {
+//                quantityStandard += 1;
+//            } else if (roomBooking1.getRoom().getRoomDetails().getName().contains("Superior")) {
+//                quantitySuperior += 1;
+//            } else if (roomBooking1.getRoom().getRoomDetails().getName().contains("Deluxe")) {
+//                quantityDeluxe += 1;
+//            } else if (roomBooking1.getRoom().getRoomDetails().getName().contains("Suite")) {
+//                quantitySuite += 1;
+//            } else {
+//                quantityConnectingRoom += 1;
+//            }
+//        }
+
+
+
+//        Timestamp a = Timestamp.valueOf(roomBooking.getCheckinDate());
+//        Timestamp b = Timestamp.valueOf(roomBooking.getCheckoutDate());
+
+
+        DateTimeFormatter timestampFormatter = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss");
+        Instant a = LocalDateTime.parse(roomBooking.getCheckinDate(), timestampFormatter)
+                .atZone(ZoneId.systemDefault())
+                .toInstant();
+        Instant b = LocalDateTime.parse(roomBooking.getCheckoutDate(), timestampFormatter)
+                .atZone(ZoneId.systemDefault())
+                .toInstant();
+
+        System.out.println(a);
+        System.out.println(b);
+//        Long rs =  bsd-storedTimestamp;
+//        Long rs = Duration.between(Instant.parse(roomBooking.getCheckinDate()),Instant.parse(roomBooking.getCheckoutDate())).getSeconds();
+//        System.out.println(rs);
+
+
+
+
+        RoomDetails roomDetails = roomBooking.getRoom().getRoomDetails();
+        Room room = roomBooking.getRoom();
+
+
         roomBookingService.save(roomBooking);
-        model.addAttribute("booking",new RoomBooking());
+        model.addAttribute("booking", new RoomBooking());
         return "booking/create";
     }
 
@@ -104,8 +193,4 @@ public class RoomBookingController {
         roomBookingService.remove(id);
         return "redirect:/bookings";
     }
-
-
-
-
 }

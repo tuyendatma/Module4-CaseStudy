@@ -3,11 +3,15 @@ package com.codegym.checkinhotel.controller;
 import com.codegym.checkinhotel.model.City;
 import com.codegym.checkinhotel.model.Hotel;
 import com.codegym.checkinhotel.model.HotelDetails;
+import com.codegym.checkinhotel.model.Room;
 import com.codegym.checkinhotel.service.city.ICityService;
 import com.codegym.checkinhotel.service.hotel.IHotelService;
 import com.codegym.checkinhotel.service.hoteldetail.IHotelDetailService;
+import com.codegym.checkinhotel.service.room.IRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -16,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/hotels")
@@ -31,6 +37,9 @@ public class HotelController {
 
     @Autowired
     private IHotelDetailService hotelDetailService;
+
+    @Autowired
+    private IRoomService roomService;
 
     @ModelAttribute("cities")
     public Iterable<City> listCities(){return cityService.findAll();}
@@ -92,5 +101,15 @@ public class HotelController {
     public String deleteHotel (@PathVariable("id") Long id){
         hotelService.remove(id);
         return "redirect:/hotels";
+    }
+
+    @GetMapping("/{id}/rooms")
+    public ResponseEntity<List<Room>> getRoomsByHotels(@PathVariable Long id){
+        Optional<Hotel> hotel = hotelService.findById(id);
+        if (!hotel.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        List<Room> rooms = roomService.getAllByHotel(hotel.get());
+        return new ResponseEntity<>(rooms,HttpStatus.OK);
     }
 }

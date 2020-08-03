@@ -43,7 +43,9 @@ public class Room {
     @JsonIgnoreProperties(value = "rooms")
     private RoomDetails roomDetails;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "room",cascade = CascadeType.ALL)
+    //mappedBy = "room"
+    @OneToMany(fetch = FetchType.LAZY,targetEntity = RoomBooking.class,cascade = CascadeType.ALL)
+    @JsonIgnoreProperties(value = "rooms")
     private List<RoomBooking>roomBookings;
 
 //    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
