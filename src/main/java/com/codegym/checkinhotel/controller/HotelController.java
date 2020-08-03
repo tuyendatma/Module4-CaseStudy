@@ -11,8 +11,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -43,7 +41,7 @@ public class HotelController {
     @GetMapping
     public String showAllHotel(Model model){
         model.addAttribute("hotels",hotelService.findAll());
-        return "hotel/index";
+        return "hotel/list";
     }
 
     @GetMapping("/create-hotel")
