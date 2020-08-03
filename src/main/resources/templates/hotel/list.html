@@ -12,7 +12,7 @@
 </head>
 <body>
 <h1>Index hotel</h1>
-<a th:href="@{/hotels/create-hotel}">Create hotel</a>
+<p sec:authorize="hasRole('ADMIN')"><a th:href="@{/hotels/create-hotel}">Create hotel</a></p>
 <table>
     <thead>
     <tr>
@@ -36,8 +36,8 @@
         <td th:text="${hotel.evaluation}"></td>
         <td th:text="${hotel.hotelDetails.name}"></td>
         <td th:text="${hotel.city.name}"></td>
-        <td ><a th:href="@{/hotels/edit-hotel/__${hotel.id}__}">Edit</a></td>
-        <td ><a th:href="@{/hotels/delete-hotel/__${hotel.id}__}">Delete</a></td>
+        <td sec:authorize="hasRole('ADMIN')"><a th:href="@{/hotels/edit-hotel/__${hotel.id}__}">Edit</a></td>
+        <td sec:authorize="hasRole('ADMIN')"><a th:href="@{/hotels/delete-hotel/__${hotel.id}__}">Delete</a></td>
     </tr>
     </tbody>
 </table>

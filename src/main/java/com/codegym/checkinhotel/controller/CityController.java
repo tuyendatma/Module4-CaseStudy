@@ -34,7 +34,7 @@ public class CityController {
     @GetMapping
     public String showAllCity(Model model) {
         model.addAttribute("cities", cityService.findAll());
-        return "cities/list";
+        return "cities/faker";
     }
 
     @GetMapping("/create-city")

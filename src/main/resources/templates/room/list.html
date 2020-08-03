@@ -12,7 +12,7 @@
 </head>
 <body>
 <h1>List room</h1>
-<a th:href="@{/rooms/create-room}">Create room</a>
+<p sec:authorize="hasRole('ADMIN')"><a th:href="@{/rooms/create-room}">Create room</a></p>
 <table>
     <thead>
     <tr>
@@ -34,9 +34,18 @@
         <td th:text="${room.hotel.name}"></td>
         <td th:text="${room.roomDetails.name}"></td>
         <td th:text="${room.price}"></td>
-        <td ><a th:href="@{/rooms/edit-room/__${room.id}__}">Edit</a></td>
-        <td ><a th:href="@{/rooms/delete-room/__${room.id}__}">Delete</a></td>
+        <td sec:authorize="hasRole('ADMIN')">
+            <a th:href="@{/rooms/edit-room/__${room.id}__}">Edit</a>
+        </td>
+        <td sec:authorize="hasRole('ADMIN')">
+            <a th:href="@{/rooms/delete-room/__${room.id}__}">Delete</a></td>
     </tr>
+<!--    <li class="nav-item" sec:authorize="isAnonymous() or hasRole('ADMIN')">-->
+<!--        <a class="nav-link " th:href="@{/users/create-user}" style="text-decoration: none">-->
+<!--            <i class="fa fa-registered"></i>-->
+<!--            Register-->
+<!--        </a>-->
+<!--    </li>-->
     </tbody>
 </table>
 </body>

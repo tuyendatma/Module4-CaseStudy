@@ -45,7 +45,7 @@ public class RoomController {
     @GetMapping
     public String showAllRooms(Model model){
         model.addAttribute("rooms",roomService.findAll());
-        return "room/list";
+        return "room/faker";
     }
 
     @GetMapping("/create-room")

@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Index booking</h1>
-<a th:href="@{/bookings/create-booking}">Create Room booking</a>
+<p sec:authorize="hasRole('ADMIN')"><a th:href="@{/bookings/create-booking}">Create Room booking</a></p>
 <table>
     <thead>
     <tr>
@@ -33,8 +33,8 @@
         <td th:text="${book.checkinDate}"></td>
         <td th:text="${book.checkoutDate}"></td>
         <td th:text="${book.note}"></td>
-        <td ><a th:href="@{/booking/edit-roombooking/__${book.id}__}">Edit</a></td>
-        <td ><a th:href="@{/booking/delete-roombooking/__${book.id}__}">Delete</a></td>
+        <td sec:authorize="hasRole('ADMIN')"><a th:href="@{/booking/edit-roombooking/__${book.id}__}">Edit</a></td>
+        <td sec:authorize="hasRole('ADMIN')"><a th:href="@{/booking/delete-roombooking/__${book.id}__}">Delete</a></td>
     </tr>
     </tbody>
 </table>
