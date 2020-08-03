@@ -7,6 +7,8 @@ import com.codegym.checkinhotel.service.hotel.IHotelService;
 import com.codegym.checkinhotel.service.room.IRoomService;
 import com.codegym.checkinhotel.service.user.IAppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -49,6 +51,18 @@ public class RoomBookingController {
         return userService.findAll();
     }
 
+    private String getPrincipal(){
+        String userName = null;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof UserDetails){
+            userName = ((UserDetails)principal).getUsername();
+        }else {
+            userName = principal.toString();
+        }
+        return userName;
+    }
+
     @GetMapping
     public String showAllRoomBookings(Model model){
         model.addAttribute("bookings",roomBookingService.findAll());
@@ -63,6 +77,10 @@ public class RoomBookingController {
 
     @PostMapping("/create-booking")
     public String createRoomBooking(@ModelAttribute RoomBooking roomBooking, Model model){
+        AppUser user = userService.getUserByUserName(getPrincipal());
+        if (user != null){
+            roomBooking.setUser(user);
+        }
         roomBookingService.save(roomBooking);
         model.addAttribute("booking",new RoomBooking());
         return "booking/create";

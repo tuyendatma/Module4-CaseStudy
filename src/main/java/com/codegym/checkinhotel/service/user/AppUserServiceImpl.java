@@ -40,7 +40,7 @@ public class AppUserServiceImpl implements IAppUserService, UserDetailsService {
         AppUser appUser = this.getUserByUsernameOrEmail(username,username);
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(appUser.getRole());
-        UserDetails userDetails = new User(appUser.getName(), appUser.getPassword(), authorities);
+        UserDetails userDetails = new User(appUser.getUsername(), appUser.getPassword(), authorities);
         return userDetails;
     }
 
