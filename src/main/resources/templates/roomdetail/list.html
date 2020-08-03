@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Index Room Detail</h1>
-<a th:href="@{/roomdetails/create-roomdetail}">Create Room Detail</a>
+<p sec:authorize="hasRole('ADMIN')"><a th:href="@{/roomdetails/create-roomdetail}">Create Room Detail</a></p>
 <table>
     <thead>
     <tr>
@@ -21,8 +21,8 @@
     <tr th:each="c : ${roomdetails}">
         <td th:text="${c.name}"></td>
         <td th:text="${c.quantity}"></td>
-        <td ><a th:href="@{/roomdetails/edit-roomdetail/__${c.id}__}">Edit</a></td>
-        <td ><a th:href="@{/roomdetails/delete-roomdetail/__${c.id}__}">Delete</a></td>
+        <td sec:authorize="hasRole('ADMIN')"><a th:href="@{/roomdetails/edit-roomdetail/__${c.id}__}">Edit</a></td>
+        <td sec:authorize="hasRole('ADMIN')"><a th:href="@{/roomdetails/delete-roomdetail/__${c.id}__}">Delete</a></td>
     </tr>
     </tbody>
 </table>

@@ -41,7 +41,7 @@ public class HotelController {
     @GetMapping
     public String showAllHotel(Model model){
         model.addAttribute("hotels",hotelService.findAll());
-        return "hotel/list";
+        return "hotel/faker";
     }
 
     @GetMapping("/create-hotel")
