@@ -18,36 +18,12 @@
 <form th:action="@{/bookings/create-booking}" th:object="${booking}" method="post">
     <table>
         <tr>
-            <td>City</td>
-            <td>
-                <select name="city">
-                    <option th:each="city: ${cities}" th:value="${city.id}" th:text="${city.name}"></option>
-                </select>
-            </td>
+            <td>Name</td>
+            <td><input type="text" th:field="*{checkinDate}"></td>
         </tr>
         <tr>
-            <td>Hotel</td>
-            <td>
-                <select name="hotel">
-                    <option th:each="hotel: ${hotels}" th:value="${hotel.id}" th:text="${hotel.name}"></option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>Room</td>
-            <td>
-                <select name="room">
-                    <option th:each="room: ${rooms}" th:value="${room.id}" th:text="${room.name}"></option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>Checkin date</td>
-            <td><input type="date" th:field="*{checkinDate}"></td>
-        </tr>
-        <tr>
-            <td>Checkout date</td>
-            <td><input type="date" th:field="*{checkoutDate}"></td>
+            <td>Name</td>
+            <td><input type="text" th:field="*{checkoutDate}"></td>
         </tr>
         <tr>
             <td>Description</td>
@@ -57,27 +33,5 @@
     <td><input type="submit" value="Create"></td>
 
 </form>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('#showCity').submit(function (event) {
-            let city =$('#city').val();
-            let json = { "city" : city}
-            $.ajax({
-                //Quy định kiểu cho request và respond
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                type: "POST",
-                data: JSON.stringify(json),
-                url: "/smartphones/createnewPhone",
-                success: function () {
-
-                }
-            });
-        });
-    });
-</script>
 </body>
 </html>
