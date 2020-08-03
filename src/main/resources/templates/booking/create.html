@@ -14,15 +14,15 @@
 <body>
 
 <h1>Create hotel</h1>
-<a th:href="@{/booking}">List hotel Detail</a>
-<form th:action="@{/booking/create-roombooking}" th:object="${roombooking}" method="post">
+<a th:href="@{/bookings}">List hotel Detail</a>
+<form th:action="@{/bookings/create-booking}" th:object="${booking}" method="post">
     <table>
         <tr>
-            <td>Checkin Date</td>
+            <td>Name</td>
             <td><input type="text" th:field="*{checkinDate}"></td>
         </tr>
         <tr>
-            <td>CheckOut Date</td>
+            <td>Name</td>
             <td><input type="text" th:field="*{checkoutDate}"></td>
         </tr>
         <tr>

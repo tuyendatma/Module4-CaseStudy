@@ -18,7 +18,7 @@ public class Hotel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
+    @Column(nullable = false,unique = true)
     private String name;
     @Column(nullable = false)
     private String address;
@@ -37,12 +37,12 @@ public class Hotel {
     private int evaluation;
 
     @ManyToOne
-    @JoinColumn(name = "city_id")
+    @JoinColumn(name = "city_id",nullable = false)
     @JsonIgnoreProperties(value = "hotels")
     private City city;
 
     @ManyToOne
-    @JoinColumn(name = "hotel_detail_id")
+    @JoinColumn(name = "hotel_detail_id",nullable = false)
     @JsonIgnoreProperties(value = "hotels")
     private HotelDetails hotelDetails;
 

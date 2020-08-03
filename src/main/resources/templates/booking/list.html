@@ -7,26 +7,34 @@
 </head>
 <body>
 <h1>Index booking</h1>
-<a th:href="@{/booking/create-roombooking}">Create Roombooking</a>
+<a th:href="@{/bookings/create-booking}">Create Room booking</a>
 <table>
     <thead>
     <tr>
+        <td>Name</td>
+        <td>City</td>
+        <td>Hotel</td>
+        <td>Room</td>
+        <td>Booking date</td>
         <td>Checkin Date</td>
         <td>Checkout Date</td>
         <td>Note</td>
-        <td>Quantity Booking</td>
         <td>Edit</td>
         <td>Delete</td>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="c : ${roombooking}">
-        <td th:text="${c.checkinDate}"></td>
-        <td th:text="${c.checkoutDate}"></td>
-        <td th:text="${c.note}"></td>
-        <td th:text="${c.quantityBooking}"></td>
-        <td ><a th:href="@{/booking/edit-roombooking/__${c.id}__}">Edit</a></td>
-        <td ><a th:href="@{/booking/delete-roombooking/__${c.id}__}">Delete</a></td>
+    <tr th:each="book : ${bookings}">
+        <td th:text="${book.user.name}"></td>
+        <td th:text="${book.room.hotel.city.name}"></td>
+        <td th:text="${book.room.hotel.name}"></td>
+        <td th:text="${book.room.name}"></td>
+        <td th:text="${book.bookingDate}"></td>
+        <td th:text="${book.checkinDate}"></td>
+        <td th:text="${book.checkoutDate}"></td>
+        <td th:text="${book.note}"></td>
+        <td ><a th:href="@{/booking/edit-roombooking/__${book.id}__}">Edit</a></td>
+        <td ><a th:href="@{/booking/delete-roombooking/__${book.id}__}">Delete</a></td>
     </tr>
     </tbody>
 </table>
