@@ -17,7 +17,7 @@ import java.io.File;
 import java.io.IOException;
 
 @Controller
-@RequestMapping("/city")
+@RequestMapping("/cities")
 public class CityController {
     @Autowired
     private ICityService cityService;
@@ -72,13 +72,13 @@ public class CityController {
         city.setImage(fileName);
         cityService.save(city);
         model.addAttribute("city", city);
-        return "redirect:/city";
+        return "redirect:/cities";
     }
 
     @GetMapping("/delete-city/{id}")
     public String deleteCity (@PathVariable("id") Long id){
         cityService.remove(id);
-        return "redirect:/city";
+        return "redirect:/cities";
     }
 }
 

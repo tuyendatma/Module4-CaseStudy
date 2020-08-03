@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 @Controller
 @RequestMapping("/rooms")
@@ -46,7 +45,7 @@ public class RoomController {
     @GetMapping
     public String showAllRooms(Model model){
         model.addAttribute("rooms",roomService.findAll());
-        return "room/index";
+        return "room/list";
     }
 
     @GetMapping("/create-room")

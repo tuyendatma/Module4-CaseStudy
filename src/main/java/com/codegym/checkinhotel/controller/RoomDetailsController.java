@@ -1,6 +1,5 @@
 package com.codegym.checkinhotel.controller;
 
-import com.codegym.checkinhotel.model.HotelDetails;
 import com.codegym.checkinhotel.model.RoomDetails;
 import com.codegym.checkinhotel.service.roomdetail.IRoomDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/roomdetail")
+@RequestMapping("/roomdetails")
 public class RoomDetailsController {
     @Autowired
     private IRoomDetailService roomDetailService;
@@ -17,7 +16,7 @@ public class RoomDetailsController {
     @GetMapping
     public String showAllRoomDetail(Model model){
         model.addAttribute("roomdetails",roomDetailService.findAll());
-        return "roomdetail/index";
+        return "roomdetail/list";
     }
 
     @GetMapping("/create-roomdetail")
@@ -43,13 +42,13 @@ public class RoomDetailsController {
     public String editRoomDetail(@ModelAttribute("roomdetail") RoomDetails roomDetails, Model model){
         roomDetailService.save(roomDetails);
         model.addAttribute("roomdetail", roomDetails);
-        return "redirect:/roomdetail";
+        return "redirect:/roomdetails";
     }
 
     @GetMapping("/delete-roomdetail/{id}")
     public String deleteRoomDetail (@PathVariable("id") Long id){
         roomDetailService.remove(id);
-        return "redirect:/roomdetail";
+        return "redirect:/roomdetails";
     }
 
 

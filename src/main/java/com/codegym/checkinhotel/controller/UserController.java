@@ -47,9 +47,9 @@ public class UserController {
     }
 
     @GetMapping
-    public String showAllHotel(Model model) {
-        model.addAttribute("users", userService.findAll());
-        return "appuser/index";
+    public String showAllHotel(Model model){
+        model.addAttribute("users",userService.findAll());
+        return "appuser/list";
     }
 
     @GetMapping("/create-user")

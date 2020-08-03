@@ -11,8 +11,8 @@
     <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico">
 </head>
 <body>
-<a th:href="@{/hoteldetail}">List hotel</a>
-<form th:action="@{/hoteldetail/edit-hoteldetail}" th:object="${hoteldetail}" method="post" >
+<a th:href="@{/hoteldetails}">List hotel</a>
+<form th:action="@{/hoteldetails/edit-hoteldetail}" th:object="${hoteldetail}" method="post" >
     <input type="text" hidden="hidden" th:field="*{id}">
     <table>
         <tr>

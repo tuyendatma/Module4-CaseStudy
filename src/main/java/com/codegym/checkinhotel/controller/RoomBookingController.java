@@ -65,8 +65,8 @@ public class RoomBookingController {
 
     @GetMapping
     public String showAllRoomBookings(Model model){
-        model.addAttribute("bookings",roomBookingService.findAll());
-        return "booking/index";
+        model.addAttribute("roombooking",roomBookingService.findAll());
+        return "booking/list";
     }
 
     @GetMapping("/create-booking")
