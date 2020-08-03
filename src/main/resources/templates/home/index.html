@@ -69,7 +69,7 @@
 
                                     <li><a href="#" th:href="@{/services}">Service</a>
                                         <ul class="submenu">
-                                            <li><a th:href="@{/blogs}">Blog</a></li>
+                                            <li><a th:href="@{/rooms}">Room</a></li>
                                             <li><a th:href="@{/single-blog}">Blog Details</a></li>
                                         </ul>
                                     </li>
@@ -117,7 +117,7 @@
                     </div>
                     <div>
                         <p>Welcome
-                            <th:block th:if="${!user.equals('anonymousUser')}">
+                            <th:block th:if="${user}">
                                 <span style="color: blue" th:text="${user}"></span>
                             </th:block>
                         </p>
