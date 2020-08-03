@@ -25,7 +25,7 @@ public class UserController {
     @GetMapping
     public String showAllHotel(Model model){
         model.addAttribute("users",userService.findAll());
-        return "appuser/index";
+        return "appuser/list";
     }
 
     @GetMapping("/create-user")

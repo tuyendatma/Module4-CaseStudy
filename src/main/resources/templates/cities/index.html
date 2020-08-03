@@ -15,7 +15,7 @@
     </script>
 </head>
 <body>
-<a href="/city/create-city">tao moi thanh pho</a>
+<a href="/cities/create-city">tao moi thanh pho</a>
 <table id="ListCity">
     <tr>
         <td>name</td>
@@ -29,8 +29,8 @@
             <td th:text="${c.name}"></td>
             <td th:text="${c.description}"></td>
             <td><img width="200px" height="200px" th:src="@{'/'+${c.image}}" alt="failure"></td>
-            <td><a class="deleteCity" th:href="@{/city/delete-city/__${c.id}__}">delete</a></td>
-            <td ><a th:href="@{/city/edit-city/__${c.id}__}">Edit</a></td>
+            <td><a class="deleteCity" th:href="@{/cities/delete-city/__${c.id}__}">delete</a></td>
+            <td ><a th:href="@{/cities/edit-city/__${c.id}__}">Edit</a></td>
         </tr>
     </th:block>
 </table>

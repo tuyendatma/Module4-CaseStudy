@@ -1,7 +1,5 @@
 package com.codegym.checkinhotel.controller;
 
-import com.codegym.checkinhotel.model.Hotel;
-import com.codegym.checkinhotel.model.HotelDetails;
 import com.codegym.checkinhotel.model.Room;
 import com.codegym.checkinhotel.model.RoomBooking;
 import com.codegym.checkinhotel.service.booking.RoomBookingService;
@@ -26,7 +24,7 @@ public class RoomBookingController {
     @GetMapping
     public String showAllRoomBookings(Model model){
         model.addAttribute("roombooking",roomBookingService.findAll());
-        return "booking/index";
+        return "booking/list";
     }
 
     @GetMapping("/create-roombooking")

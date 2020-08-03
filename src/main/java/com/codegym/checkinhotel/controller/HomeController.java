@@ -37,6 +37,6 @@ public class HomeController {
     @GetMapping("/admin")
     public String homeAdminPage(Model model){
         model.addAttribute("user",getPrincipal());
-        return "appuser/index";
+        return "list";
     }
 }

@@ -6,23 +6,23 @@
     <title>Index hotel</title>
 </head>
 <body>
-<h1>Index hotel</h1>
-<a th:href="@{/hoteldetail/create-hoteldetail}">Create hotel</a>
+<h1>Index Room Detail</h1>
+<a th:href="@{/roomdetails/create-roomdetail}">Create Room Detail</a>
 <table>
     <thead>
     <tr>
         <td>Name</td>
-        <td>Description</td>
+        <td>Quantity Exists</td>
         <td>Edit</td>
         <td>Delete</td>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="c : ${hoteldetails}">
+    <tr th:each="c : ${roomdetails}">
         <td th:text="${c.name}"></td>
-        <td th:text="${c.description}"></td>
-        <td ><a th:href="@{/hoteldetail/edit-hoteldetail/__${c.id}__}">Edit</a></td>
-        <td ><a th:href="@{/hoteldetail/delete-hoteldetail/__${c.id}__}">Delete</a></td>
+        <td th:text="${c.quantity}"></td>
+        <td ><a th:href="@{/roomdetails/edit-roomdetail/__${c.id}__}">Edit</a></td>
+        <td ><a th:href="@{/roomdetails/delete-roomdetail/__${c.id}__}">Delete</a></td>
     </tr>
     </tbody>
 </table>
