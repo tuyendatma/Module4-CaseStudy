@@ -83,7 +83,7 @@
                                     </li>
                                     <li sec:authorize="isAuthenticated()"><a href="#">Profile</a>
                                         <ul class="submenu">
-                                            <li><a th:href="@{/users/edit-user/__${user.id}__}">My profile</a>
+                                            <li><a th:href="@{/users/view-user/__${user.id}__}">My profile</a>
                                             <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/users}">User list</a>
                                             <li><a th:href="@{/users/edit-user/__${user.id}__}">Setting</a></li>
                                         </ul>

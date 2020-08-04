@@ -13,7 +13,7 @@
             <a class="ribbon-buy popular" href="#" title="Popular">
                 Hot
             </a>
-            <img th:src="@{/__${room.image}__}" alt="La Sagrada Familia">
+            <img th:src="@{'/'+${user.image}}" alt="La Sagrada Familia">
         </figure>
         <!-- end figure-->
         <div class="flex-content">
@@ -25,17 +25,18 @@
 <!--                    <img class="avatar-32" src="http://jlantunez.com/imgs/avatar.jpg" alt="Avatar">-->
                     <strong>
                         <a title="Full Name" href="#">
-                            <span th:text="${room.name}"></span>
+                            <span th:text="${user.name}"></span>
                         </a>
                     </strong>
 <!--                    <span>8 mins ago &middot; Barcelona</span>-->
                 </p>
             </header>
             <h2>
-                <span th:text="${room.hotel.name}"></span>
+<!--                <span th:text="${room.hotel.name}"></span>-->
             </h2>
             <p>
-                Figure 60%. Content 40%. Excerpt. 2-3 lines recommended. The style of la Sagrada Família is variously likened to Spanish Late Gothic, Catalan Modernism and to Art Nouveau or Catalan Noucentisme.
+                <span th:text="${user.description}"></span>
+<!--                Figure 60%. Content 40%. Excerpt. 2-3 lines recommended. The style of la Sagrada Família is variously likened to Spanish Late Gothic, Catalan Modernism and to Art Nouveau or Catalan Noucentisme.-->
             </p>
             <footer>
                 <p>

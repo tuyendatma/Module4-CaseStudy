@@ -108,6 +108,13 @@ public class UserController {
         return true;
     }
 
+    @GetMapping("/view-user/{id}")
+    public ModelAndView showViewUser(@PathVariable("id") Long id) {
+        ModelAndView modelAndView = new ModelAndView("appuser/info");
+        modelAndView.addObject("user", userService.findById(id));
+        return modelAndView;
+    }
+
     @GetMapping("/edit-user/{id}")
     public ModelAndView showFormEditUser(@PathVariable("id") Long id) {
         ModelAndView modelAndView = new ModelAndView("appuser/edit");

@@ -94,6 +94,10 @@ public class RoomBookingController {
     @GetMapping("/create-booking")
     public String showCreateRoomBooking(Model model) {
         model.addAttribute("booking", new RoomBooking());
+        AppUser user  =userService.getUserByUserName(getPrincipal());
+        if (user!=null){
+            model.addAttribute("user",user);
+        }
         return "booking/create";
     }
 

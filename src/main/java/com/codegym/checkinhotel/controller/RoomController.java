@@ -99,6 +99,12 @@ public class RoomController {
         return "room/edit";
     }
 
+    @GetMapping("/view-room/{id}")
+    public String showViewRoom(Model model, @PathVariable("id") Long id){
+        model.addAttribute("room",roomService.findById(id));
+        return "room/info";
+    }
+
     @PostMapping("/edit-room")
     public String editCity(@ModelAttribute("room") Room room, Model model){
         MultipartFile file = room.getImageFile();
