@@ -85,7 +85,7 @@
                                     <li sec:authorize="isAuthenticated()"><a href="#">Profile</a>
                                         <ul class="submenu">
                                             <li><a th:href="@{/users/edit-user/__${user.id}__}">My profile</a>
-                                            <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/users}">User lít</a>
+                                            <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/users}">User list</a>
                                             <li><a th:href="@{/users/edit-user/__${user.id}__}">Setting</a></li>
                                         </ul>
                                     </li>
@@ -118,13 +118,6 @@
                             <a href="#" th:href="@{/bookings/create-booking}" class="btn btn1 d-none d-lg-block ">Book Online</a>
                         </div>
                     </div>
-<!--                    <div>-->
-<!--                        <p>Welcome-->
-<!--                            <th:block th:if="${user}">-->
-<!--                                <span style="color: blue" th:text="${user.name}"></span>-->
-<!--                            </th:block>-->
-<!--                        </p>-->
-<!--                    </div>-->
 
                     <!-- Mobile Menu -->
                     <div class="col-12">
@@ -136,7 +129,6 @@
     </div>
     <!-- Header End -->
 </header>
-<main>
 
 
 

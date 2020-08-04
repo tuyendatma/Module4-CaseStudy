@@ -40,7 +40,7 @@
 </div>
 <!-- Preloader Start -->
 
-<header style="background-color: white !important;">
+<header>
     <!-- Header Start -->
     <div class="header-area header-sticky">
         <div class="main-header ">
@@ -70,6 +70,7 @@
                                         <ul class="submenu">
                                             <li><a th:href="@{/rooms}">Rooms</a></li>
                                             <li><a th:href="@{/hotels}">Hotel</a></li>
+                                            <li><a th:href="@{/cities}">City</a></li>
                                         </ul>
                                     </li>
 
@@ -79,11 +80,11 @@
                                             <li><a th:href="@{/single-blog}">Blog Details</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="#">Profile</a>
+                                    <li sec:authorize="isAuthenticated()"><a href="#">Profile</a>
                                         <ul class="submenu">
-                                            <li><a href="rooms.html">My profile</a>
-                                            <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/users}">User lít</a>
-                                            <li><a href="elements.html">Setting</a></li>
+                                            <li><a th:href="@{/users/edit-user/__${user.id}__}">My profile</a>
+                                            <li sec:authorize="hasRole('ADMIN')"><a th:href="@{/users}">User list</a>
+                                            <li><a th:href="@{/users/edit-user/__${user.id}__}">Setting</a></li>
                                         </ul>
                                     </li>
                                     <li><a href="#" th:href="@{/contacts}">Contact</a></li>
@@ -112,16 +113,9 @@
                     <div class="col-xl-2 col-lg-2">
                         <!-- header-btn -->
                         <div class="header-btn">
-                            <a href="#" class="btn btn1 d-none d-lg-block ">Book Online</a>
+                            <a href="#" th:href="@{/bookings/create-booking}" class="btn btn1 d-none d-lg-block ">Book Online</a>
                         </div>
                     </div>
-<!--                    <div>-->
-<!--                        <p>Welcome-->
-<!--                            <th:block th:if="${user}">-->
-<!--                                <span style="color: blue" th:text="${user}"></span>-->
-<!--                            </th:block>-->
-<!--                        </p>-->
-<!--                    </div>-->
 
                     <!-- Mobile Menu -->
                     <div class="col-12">
