@@ -1,13 +1,17 @@
 package com.codegym.checkinhotel.controller;
 
+import com.codegym.checkinhotel.model.AppUser;
 import com.codegym.checkinhotel.model.Hotel;
 import com.codegym.checkinhotel.model.Room;
 import com.codegym.checkinhotel.model.RoomDetails;
 import com.codegym.checkinhotel.service.hotel.IHotelService;
 import com.codegym.checkinhotel.service.room.IRoomService;
 import com.codegym.checkinhotel.service.roomdetail.IRoomDetailService;
+import com.codegym.checkinhotel.service.user.IAppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -32,6 +36,21 @@ public class RoomController {
     @Autowired
     private IRoomDetailService roomDetailService;
 
+    @Autowired
+    private IAppUserService userService;
+
+    private String getPrincipal(){
+        String userName = null;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof UserDetails){
+            userName = ((UserDetails)principal).getUsername();
+        }else {
+            userName = principal.toString();
+        }
+        return userName;
+    }
+
     @ModelAttribute("hotels")
     public Iterable<Hotel> hotels(){
         return hotelService.findAll();
@@ -45,6 +64,10 @@ public class RoomController {
     @GetMapping
     public String showAllRooms(Model model){
         model.addAttribute("rooms",roomService.findAll());
+        AppUser user  =userService.getUserByUserName(getPrincipal());
+        if (user!=null){
+            model.addAttribute("user",user);
+        }
         return "room/faker";
     }
 

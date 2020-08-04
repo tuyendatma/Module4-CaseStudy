@@ -14,6 +14,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 
 
@@ -23,6 +26,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -94,7 +98,7 @@ public class RoomBookingController {
     }
 
     @PostMapping("/create-booking")
-    public String createRoomBooking(@ModelAttribute RoomBooking roomBooking, Model model) {
+    public String createRoomBooking(@ModelAttribute RoomBooking roomBooking, Model model) throws ParseException {
         AppUser user = userService.getUserByUserName(getPrincipal());
         if (user == null) {
             return "access-denied";
@@ -145,32 +149,24 @@ public class RoomBookingController {
 
 
 
-//        Timestamp a = Timestamp.valueOf(roomBooking.getCheckinDate());
-//        Timestamp b = Timestamp.valueOf(roomBooking.getCheckoutDate());
-
-
-        DateTimeFormatter timestampFormatter = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss");
-        Instant a = LocalDateTime.parse(roomBooking.getCheckinDate(), timestampFormatter)
-                .atZone(ZoneId.systemDefault())
-                .toInstant();
-        Instant b = LocalDateTime.parse(roomBooking.getCheckoutDate(), timestampFormatter)
-                .atZone(ZoneId.systemDefault())
-                .toInstant();
-
-        System.out.println(a);
-        System.out.println(b);
-//        Long rs =  bsd-storedTimestamp;
-//        Long rs = Duration.between(Instant.parse(roomBooking.getCheckinDate()),Instant.parse(roomBooking.getCheckoutDate())).getSeconds();
-//        System.out.println(rs);
+//        DateTimeFormatter timestampFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+        Date date1 = dateFormat.parse(roomBooking.getCheckinDate());
+        Date date2 = dateFormat.parse(roomBooking.getCheckoutDate());
+        long difference = date2.getTime()-date1.getTime();
+//        System.out.println(difference);
+//        String timestamp = (String.valueOf(System.currentTimeMillis()));
+//        Date date3 = dateFormat.parse(timestamp);
+//        long b = date1.getTime()-date3.getTime();
+//        System.out.println(b);
 
 
 
-
-        RoomDetails roomDetails = roomBooking.getRoom().getRoomDetails();
-        Room room = roomBooking.getRoom();
-
-
+        if (difference<0){
+            model.addAttribute("messages","Pls check your booking time!");
+        }
         roomBookingService.save(roomBooking);
+        model.addAttribute("messages","Your booking room success!");
         model.addAttribute("booking", new RoomBooking());
         return "booking/create";
     }

@@ -13,7 +13,10 @@
 
 <body>
 
-<h1>Create hotel</h1>
+<h1>Booking hotel</h1>
+<th:block th:if="${messages}">
+    <p style="color: blue" th:text="${messages}"></p>
+</th:block>
 <a th:href="@{/bookings}">List hotel Detail</a>
 <form id="createBookingForm" th:action="@{/bookings/create-booking}" th:object="${booking}" method="post">
     <table>

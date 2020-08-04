@@ -35,7 +35,7 @@ public class HomeController {
     public String homePage(Model model){
         AppUser user  =userService.getUserByUserName(getPrincipal());
         if (user!=null){
-            model.addAttribute("user",user.getName());
+            model.addAttribute("user",user);
         }
         return "home/index";
     }

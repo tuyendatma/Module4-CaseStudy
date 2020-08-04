@@ -1,13 +1,17 @@
 package com.codegym.checkinhotel.controller;
 
+import com.codegym.checkinhotel.model.AppUser;
 import com.codegym.checkinhotel.model.City;
 import com.codegym.checkinhotel.model.Hotel;
 import com.codegym.checkinhotel.service.city.ICityService;
 import com.codegym.checkinhotel.service.hotel.IHotelService;
+import com.codegym.checkinhotel.service.user.IAppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -31,9 +35,28 @@ public class CityController {
     @Autowired
     private IHotelService hotelService;
 
+    @Autowired
+    private IAppUserService userService;
+
+    private String getPrincipal(){
+        String userName = null;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof UserDetails){
+            userName = ((UserDetails)principal).getUsername();
+        }else {
+            userName = principal.toString();
+        }
+        return userName;
+    }
+
     @GetMapping
     public String showAllCity(Model model) {
         model.addAttribute("cities", cityService.findAll());
+        AppUser user  =userService.getUserByUserName(getPrincipal());
+        if (user!=null){
+            model.addAttribute("user",user);
+        }
         return "cities/faker";
     }
 

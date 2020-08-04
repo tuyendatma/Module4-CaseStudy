@@ -28,6 +28,18 @@ public class UserController {
     @Autowired
     private IRoleService roleService;
 
+    private String getPrincipal(){
+        String userName = null;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof UserDetails){
+            userName = ((UserDetails)principal).getUsername();
+        }else {
+            userName = principal.toString();
+        }
+        return userName;
+    }
+
     @ModelAttribute("roles")
     private Iterable<AppRole> roles() {
         return roleService.findAll();
@@ -49,7 +61,11 @@ public class UserController {
     @GetMapping
     public String showAllHotel(Model model){
         model.addAttribute("users",userService.findAll());
-        return "appuser/list";
+        AppUser user  =userService.getUserByUserName(getPrincipal());
+        if (user!=null){
+            model.addAttribute("user",user);
+        }
+        return "appuser/fake";
     }
 
     @GetMapping("/create-user")

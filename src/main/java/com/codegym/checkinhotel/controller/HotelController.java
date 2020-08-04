@@ -1,17 +1,17 @@
 package com.codegym.checkinhotel.controller;
 
-import com.codegym.checkinhotel.model.City;
-import com.codegym.checkinhotel.model.Hotel;
-import com.codegym.checkinhotel.model.HotelDetails;
-import com.codegym.checkinhotel.model.Room;
+import com.codegym.checkinhotel.model.*;
 import com.codegym.checkinhotel.service.city.ICityService;
 import com.codegym.checkinhotel.service.hotel.IHotelService;
 import com.codegym.checkinhotel.service.hoteldetail.IHotelDetailService;
 import com.codegym.checkinhotel.service.room.IRoomService;
+import com.codegym.checkinhotel.service.user.IAppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -41,6 +41,21 @@ public class HotelController {
     @Autowired
     private IRoomService roomService;
 
+    @Autowired
+    private IAppUserService userService;
+
+    private String getPrincipal(){
+        String userName = null;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof UserDetails){
+            userName = ((UserDetails)principal).getUsername();
+        }else {
+            userName = principal.toString();
+        }
+        return userName;
+    }
+
     @ModelAttribute("cities")
     public Iterable<City> listCities(){return cityService.findAll();}
 
@@ -50,6 +65,10 @@ public class HotelController {
     @GetMapping
     public String showAllHotel(Model model){
         model.addAttribute("hotels",hotelService.findAll());
+        AppUser user  =userService.getUserByUserName(getPrincipal());
+        if (user!=null){
+            model.addAttribute("user",user);
+        }
         return "hotel/faker";
     }
 
