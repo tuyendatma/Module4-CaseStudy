@@ -65,7 +65,7 @@ public class UserController {
         if (user!=null){
             model.addAttribute("user",user);
         }
-        return "appuser/list";
+        return "appuser/faker";
     }
 
     @GetMapping("/create-user")
