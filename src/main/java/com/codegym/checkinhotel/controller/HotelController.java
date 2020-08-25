@@ -44,30 +44,34 @@ public class HotelController {
     @Autowired
     private IAppUserService userService;
 
-    private String getPrincipal(){
+    private String getPrincipal() {
         String userName = null;
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        if (principal instanceof UserDetails){
-            userName = ((UserDetails)principal).getUsername();
-        }else {
+        if (principal instanceof UserDetails) {
+            userName = ((UserDetails) principal).getUsername();
+        } else {
             userName = principal.toString();
         }
         return userName;
     }
 
     @ModelAttribute("cities")
-    public Iterable<City> listCities(){return cityService.findAll();}
+    public Iterable<City> listCities() {
+        return cityService.findAll();
+    }
 
     @ModelAttribute("hotelDetails")
-    public Iterable<HotelDetails> listHotelDetails(){return hotelDetailService.findAll();}
+    public Iterable<HotelDetails> listHotelDetails() {
+        return hotelDetailService.findAll();
+    }
 
     @GetMapping
-    public String showAllHotel(Model model){
-        model.addAttribute("hotels",hotelService.findAll());
-        AppUser user  =userService.getUserByUserName(getPrincipal());
-        if (user!=null){
-            model.addAttribute("user",user);
+    public String showAllHotel(Model model) {
+        model.addAttribute("hotels", hotelService.findAll());
+        AppUser user = userService.getUserByUserName(getPrincipal());
+        if (user != null) {
+            model.addAttribute("user", user);
         }
         return "hotel/faker";
     }
@@ -79,7 +83,7 @@ public class HotelController {
     }
 
     @PostMapping("/create-hotel")
-    public String createHotel( @ModelAttribute Hotel hotel, Model model) {
+    public String createHotel(@ModelAttribute Hotel hotel, Model model) {
         MultipartFile file = hotel.getImageFile();
         String fileName = file.getOriginalFilename();
         String fileUpload = environment.getProperty("upload.hotel").toString();
@@ -95,13 +99,13 @@ public class HotelController {
     }
 
     @GetMapping("/edit-hotel/{id}")
-    public String showEditHotel(Model model, @PathVariable("id") Long id){
-        model.addAttribute("hotel",hotelService.findById(id));
+    public String showEditHotel(Model model, @PathVariable("id") Long id) {
+        model.addAttribute("hotel", hotelService.findById(id));
         return "hotel/edit";
     }
 
     @PostMapping("/edit-hotel")
-    public String editCity(@ModelAttribute("hotel") Hotel hotel, Model model){
+    public String editCity(@ModelAttribute("hotel") Hotel hotel, Model model) {
         MultipartFile file = hotel.getImageFile();
         String fileName = file.getOriginalFilename();
         String fileUpload = environment.getProperty("upload.hotel").toString();
@@ -117,18 +121,33 @@ public class HotelController {
     }
 
     @GetMapping("/delete-hotel/{id}")
-    public String deleteHotel (@PathVariable("id") Long id){
+    public String deleteHotel(@PathVariable("id") Long id) {
         hotelService.remove(id);
         return "redirect:/hotels";
     }
 
-    @GetMapping("/{id}/rooms")
-    public ResponseEntity<List<Room>> getRoomsByHotels(@PathVariable Long id){
+    @GetMapping("/room/{id}")
+    public String getRoomsByHotel(@PathVariable Long id, Model model) {
         Optional<Hotel> hotel = hotelService.findById(id);
-        if (!hotel.isPresent()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (hotel.isPresent()) {
+            List<Room> rooms = roomService.getAllByHotel(hotel.get());
+            model.addAttribute("rooms",rooms);
         }
-        List<Room> rooms = roomService.getAllByHotel(hotel.get());
-        return new ResponseEntity<>(rooms,HttpStatus.OK);
+        return "room/faker";
+    }
+
+    @GetMapping("/view-hotel/{id}")
+    public String showViewHotel(Model model, @PathVariable("id") Long id) {
+        Optional<Hotel> hotel = hotelService.findById(id);
+        if (hotel.isPresent()){
+            List<Room> rooms = roomService.getAllByHotel(hotel.get());
+            model.addAttribute("rooms",rooms);
+            AppUser user = userService.getUserByUserName(getPrincipal());
+            if (user != null) {
+                model.addAttribute("user", user);
+            }
+        }
+        model.addAttribute("hotel", hotelService.findById(id));
+        return "hotel/info";
     }
 }

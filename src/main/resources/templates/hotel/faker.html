@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Hotel</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -42,7 +42,7 @@
 </div>
 <!-- Preloader Start -->
 
-<header>
+<header style="background-color: white !important;">
     <!-- Header Start -->
     <div class="header-area header-sticky">
         <div class="main-header ">
@@ -132,13 +132,12 @@
 
 
 
-<p sec:authorize="hasRole('ADMIN')"><a th:href="@{/hotels/create-hotel}">Create room</a></p>
+<p sec:authorize="hasRole('ADMIN')"><a th:href="@{/hotels/create-hotel}">Create hotel</a></p>
 <!-- Product Set -->
 <div class="ProductSet ProductSet--grid">
-
     <!-- Product Card: vertical -->
     <div th:each="hotel : ${hotels}">
-        <a href="#" class="ProductCard ProductCard--grid">
+        <a th:href="@{/hotels/view-hotel/__${hotel.id}__}" class="ProductCard ProductCard--grid">
             <div class="ProductCard__img-wrapper">
                 <img th:src="@{'/'+${hotel.image}}" alt="ERROR" class="ProductCard__img">
             </div>
@@ -152,26 +151,15 @@
                         <h5 class="ProductCard__price" th:text="${hotel.city.name}"></h5>
                         <h5 class="ProductCard__price" th:text="${hotel.hotelDetails.name}"></h5>
                     </div>
-
-                    <!--                    <button class="IconBtn">-->
-                    <!--                        <svg class="Icon Icon&#45;&#45;medium Icon&#45;&#45;colored">-->
-                    <!--                            <use xlink:href="./src/img/icons/svg-sprite.svg#heart"></use>-->
-                    <!--                        </svg>-->
-                    <!--                    </button>-->
                 </div>
-
-                <p class="ProductCard__description" >
-                <h5 th:text="${hotel.description}"></h5>
+                <p sec:authorize="hasRole('ADMIN')">
+                    <a th:href="@{/hotels/edit-hotel/__${hotel.id}__}">Edit</a>
                 </p>
                 <p sec:authorize="hasRole('ADMIN')">
-                    <a th:href="@{/hotels/edit-room/__${hotel.id}__}">Edit</a>
-                </p>
-                <p sec:authorize="hasRole('ADMIN')">
-                    <a th:href="@{/hotels/delete-room/__${hotel.id}__}">Delete</a></p>
+                    <a th:href="@{/hotels/delete-hotel/__${hotel.id}__}">Delete</a></p>
             </div>
         </a>
     </div>
-
 </div>
 <!-- END: Product Set -->
 

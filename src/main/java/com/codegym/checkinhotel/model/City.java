@@ -1,5 +1,6 @@
 package com.codegym.checkinhotel.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,6 +34,7 @@ public class City {
 //    targetEntity = Hotel.class  mappedBy = "city"
     @OneToMany(fetch = FetchType.EAGER,cascade = {CascadeType.ALL},targetEntity = Hotel.class)
     @JsonIgnoreProperties(value = "cities")
+    @JsonIgnore
     private List<Hotel> hotels;
 
     public City(Long id,String name,String description, String image){

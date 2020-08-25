@@ -152,7 +152,6 @@ public class RoomBookingController {
 //        }
 
 
-
 //        DateTimeFormatter timestampFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
         Date date1 = dateFormat.parse(roomBooking.getCheckinDate());
@@ -165,14 +164,15 @@ public class RoomBookingController {
 //        System.out.println(b);
 
 
-
-        if (difference<0){
-            model.addAttribute("messages","Pls check your booking time!");
-        }
-        roomBookingService.save(roomBooking);
-        model.addAttribute("messages","Your booking room success!");
-        model.addAttribute("booking", new RoomBooking());
-        return "booking/create";
+//        if (difference<0){
+//            model.addAttribute("messages","Pls check your booking time!");
+//            return "booking/create";
+//        }else {
+            model.addAttribute("booking", new RoomBooking());
+//            model.addAttribute("messages","Your booking room success!");
+            roomBookingService.save(roomBooking);
+            return "booking/create";
+//        }
     }
 
     @GetMapping("/edit-booking/{id}")

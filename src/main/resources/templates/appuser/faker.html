@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>User</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -42,7 +42,7 @@
 </div>
 <!-- Preloader Start -->
 
-<header>
+<header style="background-color: white !important;">
     <!-- Header Start -->
     <div class="header-area header-sticky">
         <div class="main-header ">
@@ -132,7 +132,7 @@
 
 
 
-<p sec:authorize="hasRole('ADMIN')"><a th:href="@{/users/create-user}">Create user</a></p>
+<!--<p sec:authorize="hasRole('ADMIN')"><a th:href="@{/users/create-user}">Create user</a></p>-->
 <!-- Product Set -->
 <div class="ProductSet ProductSet--grid">
 
