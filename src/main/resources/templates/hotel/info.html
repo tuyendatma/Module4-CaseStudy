@@ -23,9 +23,10 @@
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/responsive.css">
     <link rel="stylesheet" href="/styles/css/list.css">
-
+    <link rel="stylesheet" href="/styles/css/info.css">
 </head>
 <body>
+
 
 <!-- Preloader Start -->
 <div id="preloader-active">
@@ -40,7 +41,7 @@
 </div>
 <!-- Preloader Start -->
 
-<header style="background-color: white !important;">
+<header>
     <!-- Header Start -->
     <div class="header-area header-sticky">
         <div class="main-header ">
@@ -128,41 +129,79 @@
     <!-- Header End -->
 </header>
 
-
-
-<p sec:authorize="hasRole('ADMIN')"><a th:href="@{/rooms/create-room}">Create room</a></p>
-<!-- Product Set -->
-<div class="ProductSet ProductSet--grid">
-    <!-- Product Card: vertical -->
-    <div th:each="room : ${rooms}">
-        <a th:href="@{/rooms/view-room/__${room.id}__}" class="ProductCard ProductCard--grid">
-            <div class="ProductCard__img-wrapper">
-                <img th:src="@{'/'+${room.image}}" alt="ERROR" class="ProductCard__img">
-            </div>
-
-            <div class="ProductCard__details">
-
-                <div class="ProductCard__details__header">
-                    <div class="ProductCard__titles">
-                        <h4 class="ProductCard__title" th:text="${room.name}"></h4>
-                        <h5 class="ProductCard__price" th:text="${room.price}"></h5>
-                        <h5 class="ProductCard__price" th:text="${room.hotel.name}"></h5>
-                        <h5 class="ProductCard__price" th:text="${room.roomDetails.name}"></h5>
-                    </div>
-                </div>
-                <p sec:authorize="hasRole('ADMIN')">
-                    <a th:href="@{/rooms/edit-room/__${room.id}__}">Edit</a>
+<main role="main">
+    <article class="card-60 social">
+        <figure>
+            <a class="ribbon-buy popular" href="#" title="Popular">Hot</a>
+            <img th:src="@{/__${hotel.get().image}__}" alt="Room">
+            <a style="font-size: 30px" class="button " th:href="@{/hotels/room/__${hotel.get().id}__}">Find a room</a>
+        </figure>
+        <!-- end figure-->
+        <div class="flex-content">
+            <header>
+                <p class="user">
+                    <a class="button follow" href="#" title="Follow">More</a>
+                    <img class="avatar-32" th:src="@{hotel.get().city.image}" alt="City">
+                    <strong>
+                        <a title="Full Name" href="#">
+                            <span th:text="${hotel.get().city.name}"></span>
+                        </a>
+                    </strong>
+<!--                    <span>8 mins ago &middot; Barcelona</span>-->
                 </p>
-                <p sec:authorize="hasRole('ADMIN')">
-                    <a th:href="@{/rooms/delete-room/__${room.id}__}">Delete</a></p>
+            </header>
+            <h2>
+                <span th:text="${hotel.get().name}"></span>
+            </h2>
+            <p th:text="${hotel.get().description}"></p>
+            <div style="font-size: 17px">
+                Address: <p th:text="${hotel.get().address}"></p>
+                Evaluation: <p th:text="${hotel.get().evaluation}"></p>
             </div>
-        </a>
+            <footer>
+                <p>
+                    <a class="bt-love" title="Love" href="#">Love</a>
+                    <a class="bt-comment" title="Comment" href="#">Comment</a>
+                </p>
+            </footer>
+        </div>
+        <!-- end .flex-content-->
+    </article>
+    <p>Photos by <a th:href="@{/hotels/room/__${hotel.get().id}__}" th:text="${hotel.get().name}"></a>.</p>
+
+
+    <!-- Product Set -->
+    <div class="ProductSet ProductSet--grid">
+        <!-- Product Card: vertical -->
+        <div th:each="room : ${rooms}">
+            <a th:href="@{/rooms/view-room/__${room.id}__}" class="ProductCard ProductCard--grid">
+                <div class="ProductCard__img-wrapper">
+                    <img th:src="@{'/'+${room.image}}" alt="ERROR" class="ProductCard__img">
+                </div>
+
+                <div class="ProductCard__details">
+
+                    <div class="ProductCard__details__header">
+                        <div class="ProductCard__titles">
+                            <h4 class="ProductCard__title" th:text="${room.name}"></h4>
+                            <h5 class="ProductCard__price" th:text="${room.price}"></h5>
+                            <h5 class="ProductCard__price" th:text="${room.hotel.name}"></h5>
+                            <h5 class="ProductCard__price" th:text="${room.roomDetails.name}"></h5>
+                        </div>
+                    </div>
+                    <p sec:authorize="hasRole('ADMIN')">
+                        <a th:href="@{/rooms/edit-room/__${room.id}__}">Edit</a>
+                    </p>
+                    <p sec:authorize="hasRole('ADMIN')">
+                        <a th:href="@{/rooms/delete-room/__${room.id}__}">Delete</a></p>
+                </div>
+            </a>
+        </div>
     </div>
-</div>
-<!-- END: Product Set -->
+    <!-- END: Product Set -->
 
 
-
+</main>
 
 <footer>
     <!-- Footer Start-->

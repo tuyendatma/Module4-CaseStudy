@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>City</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -42,7 +42,7 @@
 </div>
 <!-- Preloader Start -->
 
-<header>
+<header style="background-color: white !important;">
     <!-- Header Start -->
     <div class="header-area header-sticky">
         <div class="main-header ">
@@ -138,7 +138,7 @@
 
     <!-- Product Card: vertical -->
     <div th:each="c: ${cities}">
-        <a href="#" class="ProductCard ProductCard--grid">
+        <a th:href="@{/cities/view-city/__${c.id}__}" class="ProductCard ProductCard--grid">
             <div class="ProductCard__img-wrapper">
                 <img th:src="@{'/'+${c.image}}" alt="ERROR" class="ProductCard__img">
             </div>
@@ -149,26 +149,15 @@
                     <div class="ProductCard__titles">
                         <h4 class="ProductCard__title" th:text="${c.name}"></h4>
                     </div>
-
-                    <!--                    <button class="IconBtn">-->
-                    <!--                        <svg class="Icon Icon&#45;&#45;medium Icon&#45;&#45;colored">-->
-                    <!--                            <use xlink:href="./src/img/icons/svg-sprite.svg#heart"></use>-->
-                    <!--                        </svg>-->
-                    <!--                    </button>-->
                 </div>
-
-                <p class="ProductCard__description" >
-                <h5 th:text="${c.description}"></h5>
+                <p sec:authorize="hasRole('ADMIN')">
+                    <a th:href="@{/cities/edit-city/__${c.id}__}">Edit</a>
                 </p>
                 <p sec:authorize="hasRole('ADMIN')">
-                    <a th:href="@{/cities/edit-room/__${c.id}__}">Edit</a>
-                </p>
-                <p sec:authorize="hasRole('ADMIN')">
-                    <a th:href="@{/cities/delete-room/__${c.id}__}">Delete</a></p>
+                    <a th:href="@{/cities/delete-city/__${c.id}__}">Delete</a></p>
             </div>
         </a>
     </div>
-
 </div>
 <!-- END: Product Set -->
 

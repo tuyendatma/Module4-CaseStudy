@@ -59,10 +59,10 @@ public class UserController {
     }
 
     @GetMapping
-    public String showAllHotel(Model model){
+    public String showAllUser(Model model){
         model.addAttribute("users",userService.findAll());
         AppUser user  =userService.getUserByUserName(getPrincipal());
-        if (user!=null){
+        if (user != null){
             model.addAttribute("user",user);
         }
         return "appuser/faker";
@@ -71,6 +71,10 @@ public class UserController {
     @GetMapping("/create-user")
     public ModelAndView showFormLogin() {
         ModelAndView modelAndView = new ModelAndView("home/register");
+        AppUser user = userService.getUserByUserName(getPrincipal());
+        if (user != null) {
+            modelAndView.addObject("user1", user);
+        }
         modelAndView.addObject("user", new AppUser());
         return modelAndView;
     }

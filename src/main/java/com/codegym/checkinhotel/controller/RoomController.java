@@ -20,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/rooms")
@@ -99,12 +101,6 @@ public class RoomController {
         return "room/edit";
     }
 
-    @GetMapping("/view-room/{id}")
-    public String showViewRoom(Model model, @PathVariable("id") Long id){
-        model.addAttribute("room",roomService.findById(id));
-        return "room/info";
-    }
-
     @PostMapping("/edit-room")
     public String editCity(@ModelAttribute("room") Room room, Model model){
         MultipartFile file = room.getImageFile();
@@ -125,5 +121,15 @@ public class RoomController {
     public String deleteRoom (@PathVariable("id") Long id){
         roomService.remove(id);
         return "redirect:/rooms";
+    }
+
+    @GetMapping("/view-room/{id}")
+    public String showViewRoom(Model model, @PathVariable("id") Long id){
+        AppUser user = userService.getUserByUserName(getPrincipal());
+        if (user != null) {
+            model.addAttribute("user", user);
+        }
+        model.addAttribute("room",roomService.findById(id));
+        return "room/info";
     }
 }

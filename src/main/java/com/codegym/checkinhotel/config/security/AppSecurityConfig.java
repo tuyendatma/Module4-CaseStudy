@@ -29,19 +29,20 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/home").permitAll()
-                .antMatchers("/home/**","/bookings/**").hasRole("ADMIN")
-                .antMatchers("/home/**","/bookings/create-booking").hasRole("USER")
-                .and()
-//                .formLogin()
-                .formLogin().loginPage("/login").successHandler(customSuccessHandler)
-                .usernameParameter("username").passwordParameter("password").permitAll()
-//                .failureUrl("/fail-login")
-                .and()
-                .logout().logoutSuccessUrl("/home").permitAll()
-//                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .and().exceptionHandling().accessDeniedPage("/access-denied");
-        http.csrf().disable();
+//        http.authorizeRequests()
+//                .antMatchers("/home","/hotels","/rooms","/cities").permitAll()
+//                .and().authorizeRequests()
+//                .antMatchers("/home/**","/bookings/**","/hotels/**,/rooms/**","/cities/**","/hoteldetails/**","/roomdetails/**").access("hasRole('ADMIN')")  //hasRole("ADMIN")
+//                .antMatchers("/home/**","/bookings/**","/hotels/**,/rooms/**,/cities/**").access("hasRole('USER')")  //hasRole("USER")
+//                .and()
+////                .formLogin()
+//                .formLogin().loginPage("/login").successHandler(customSuccessHandler)
+//                .usernameParameter("username").passwordParameter("password").permitAll()
+////                .failureUrl("/fail-login")
+//                .and()
+//                .logout().logoutSuccessUrl("/home").permitAll()
+////                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+//                .and().exceptionHandling().accessDeniedPage("/access-denied");
+//        http.csrf().disable();
     }
 }
